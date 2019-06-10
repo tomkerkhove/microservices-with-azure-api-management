@@ -1,4 +1,5 @@
-﻿using Demo.Monolith.API.Extensions;
+﻿using Demo.Monolith.API.Data.Providers;
+using Demo.Monolith.API.Extensions;
 using Demo.Monolith.API.Managers;
 using Demo.Monolith.API.Repositories.InMemory;
 using Demo.Monolith.API.Repositories.Interfaces;
@@ -32,9 +33,10 @@ namespace Demo.Monolith.API
                 });
 
             services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-            services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
             services.AddSingleton<IShipmentRepository, InMemoryShipmentRepository>();
+            services.AddScoped<IOrderRepository, OrderTableRepository>();
             services.AddScoped<OrderManager>();
+            services.AddScoped<TableProvider>();
 
             services.UseOpenApiSpecifications();
         }
