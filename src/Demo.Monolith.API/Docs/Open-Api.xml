@@ -12,6 +12,24 @@
             <response code="200">API is healthy</response>
             <response code="503">API is not healthy</response>
         </member>
+        <member name="M:Demo.Monolith.API.Controllers.OrdersController.Post(Demo.Monolith.API.Contracts.v1.Order)">
+            <summary>
+                Create New Order
+            </summary>
+            <remarks>Provide capability create a new order for products from our catalog</remarks>
+            <response code="201">Order was successfully created</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
+        <member name="M:Demo.Monolith.API.Controllers.OrdersController.Get(System.String)">
+            <summary>
+                Get Order
+            </summary>
+            <remarks>Provide information about a previously created order</remarks>
+            <response code="200">Information about a specific order</response>
+            <response code="400">Request was invalid</response>
+            <response code="404">Requested product was not found</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
         <member name="M:Demo.Monolith.API.Controllers.ProductsController.Get">
             <summary>
                 Get Products
