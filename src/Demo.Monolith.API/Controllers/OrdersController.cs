@@ -1,19 +1,22 @@
 ﻿using Demo.Monolith.API.Contracts.v1;
-using Demo.Monolith.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Threading.Tasks;
+using Demo.Monolith.API.Managers;
+using Demo.Monolith.API.Repositories.Interfaces;
 
 namespace Demo.Monolith.API.Controllers
 {
     [Route("api/v1/orders")]
     public class OrdersController : Controller
     {
+        private readonly OrderManager _orderManager;
         private readonly IOrderRepository _orderRepository;
 
-        public OrdersController(IOrderRepository orderRepository)
+        public OrdersController(OrderManager orderManager, IOrderRepository orderRepository)
         {
+            _orderManager = orderManager;
             _orderRepository = orderRepository;
         }
 
@@ -28,8 +31,7 @@ namespace Demo.Monolith.API.Controllers
         [SwaggerOperation(OperationId = "Order_Create")]
         public async Task<IActionResult> Post([FromBody]Order orderRequest)
         {
-            var orderConfirmation = await _orderRepository.CreateAsync(orderRequest);
-            
+            var orderConfirmation = await _orderManager.CreateAsync(orderRequest);
             return CreatedAtAction(nameof(Get), new { ConfirmationId = orderConfirmation.ConfirmationId }, orderConfirmation);
         }
 

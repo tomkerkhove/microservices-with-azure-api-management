@@ -1,4 +1,5 @@
 ﻿using Demo.Monolith.API.Extensions;
+using Demo.Monolith.API.Managers;
 using Demo.Monolith.API.Repositories.InMemory;
 using Demo.Monolith.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,8 @@ namespace Demo.Monolith.API
 
             services.AddSingleton<IProductRepository, InMemoryProductRepository>();
             services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
+            services.AddSingleton<IShipmentRepository, InMemoryShipmentRepository>();
+            services.AddScoped<OrderManager>();
 
             services.UseOpenApiSpecifications();
         }

@@ -48,6 +48,26 @@
             <response code="404">Requested product was not found</response>
             <response code="503">Something went wrong, please contact support</response>
         </member>
+        <member name="M:Demo.Monolith.API.Controllers.ShipmentsController.Get(System.String)">
+            <summary>
+                Get Shipment Information
+            </summary>
+            <remarks>Provides information about a shipment</remarks>
+            <response code="200">Information about a specific shipment</response>
+            <response code="400">Request was invalid</response>
+            <response code="404">Requested product was not found</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
+        <member name="M:Demo.Monolith.API.Controllers.ShipmentsController.Shipment_UpdateStatus(Demo.Monolith.API.Contracts.v1.ShipmentStatusUpdate)">
+            <summary>
+                Update Shipment Status
+            </summary>
+            <remarks>Webhook for external shipment partners to provide updates about a shipment</remarks>
+            <response code="200">Update about a specific shipment and its status</response>
+            <response code="400">Request was invalid</response>
+            <response code="404">Requested product was not found</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
         <member name="T:Demo.Monolith.API.Extensions.IApplicationBuilderExtensions">
             <summary>
             Provides an Application Builder extension for the Swagger/OpenAPI integration

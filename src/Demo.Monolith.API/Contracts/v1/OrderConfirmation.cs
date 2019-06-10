@@ -3,5 +3,6 @@
     public class OrderConfirmation : Order
     {
         public string ConfirmationId { get; set; }
+        public ShipmentInformation ShipmentInformation { get; set; }
     }
 }

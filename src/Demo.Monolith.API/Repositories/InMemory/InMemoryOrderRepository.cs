@@ -10,19 +10,13 @@ namespace Demo.Monolith.API.Repositories.InMemory
     {
         private readonly Dictionary<string, Order> _orders = new Dictionary<string, Order>();
 
-        public Task<OrderConfirmation> CreateAsync(Order createdOrder)
+        public Task<string> CreateAsync(Order createdOrder)
         {
             var confirmationId = Guid.NewGuid().ToString();
 
             _orders.Add(confirmationId, createdOrder);
 
-            var orderConfirmation= new OrderConfirmation
-            {
-                ConfirmationId = confirmationId,
-                Customer = createdOrder.Customer
-            };
-
-            return Task.FromResult(orderConfirmation);
+            return Task.FromResult(confirmationId);
         }
 
         public Task<Order> GetAsync(string confirmationId)

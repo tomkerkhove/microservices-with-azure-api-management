@@ -6,6 +6,6 @@ namespace Demo.Monolith.API.Repositories.Interfaces
     public interface IOrderRepository
     {
         Task<Order> GetAsync(string confirmationId);
-        Task<OrderConfirmation> CreateAsync(Order createdOrder);
+        Task<string> CreateAsync(Order createdOrder);
     }
 }
