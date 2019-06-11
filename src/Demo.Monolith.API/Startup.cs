@@ -1,4 +1,5 @@
-﻿using Demo.Monolith.API.Extensions;
+﻿using Demo.Monolith.API.Data.Providers;
+using Demo.Monolith.API.Extensions;
 using Demo.Monolith.API.Managers;
 using Demo.Monolith.API.Repositories.InMemory;
 using Demo.Monolith.API.Repositories.Interfaces;
@@ -31,10 +32,11 @@ namespace Demo.Monolith.API
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 });
 
-            services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-            services.AddSingleton<IOrderRepository, InMemoryOrderRepository>();
-            services.AddSingleton<IShipmentRepository, InMemoryShipmentRepository>();
+            services.AddScoped<IShipmentRepository, ShipmentsTableRepository>();
+            services.AddScoped<IProductRepository, ProductTableRepository>();
+            services.AddScoped<IOrderRepository, OrderTableRepository>();
             services.AddScoped<OrderManager>();
+            services.AddScoped<TableStorageAccessor>();
 
             services.UseOpenApiSpecifications();
         }
