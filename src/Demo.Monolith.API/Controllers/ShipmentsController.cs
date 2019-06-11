@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Demo.Monolith.API.Contracts.v1;
 using Demo.Monolith.API.Exceptions;
+using Demo.Monolith.API.OpenAPI;
 using Demo.Monolith.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -10,6 +11,7 @@ namespace Demo.Monolith.API.Controllers
 {
     [Route("api/v1/shipments")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = OpenApiCategories.Shipments)]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentRepository _shipmentRepository;
@@ -52,6 +54,7 @@ namespace Demo.Monolith.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [SwaggerOperation(OperationId = "Shipment_UpdateStatus")]
+        [ApiExplorerSettings(GroupName = OpenApiCategories.ShipmentWebhook)]
         public async Task<IActionResult> Shipment_UpdateStatus([FromBody] ShipmentStatusUpdate shipmentStatusUpdate)
         {
             try

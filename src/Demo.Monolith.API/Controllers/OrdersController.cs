@@ -4,11 +4,13 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using System.Threading.Tasks;
 using Demo.Monolith.API.Managers;
+using Demo.Monolith.API.OpenAPI;
 using Demo.Monolith.API.Repositories.Interfaces;
 
 namespace Demo.Monolith.API.Controllers
 {
     [Route("api/v1/orders")]
+    [ApiExplorerSettings(GroupName = OpenApiCategories.Orders)]
     public class OrdersController : Controller
     {
         private readonly OrderManager _orderManager;

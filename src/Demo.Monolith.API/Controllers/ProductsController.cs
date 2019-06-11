@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Demo.Monolith.API.Contracts.v1;
+using Demo.Monolith.API.OpenAPI;
 using Demo.Monolith.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -9,6 +10,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Demo.Monolith.API.Controllers
 {
     [Route("api/v1/products")]
+    [ApiExplorerSettings(GroupName = OpenApiCategories.Products)]
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;

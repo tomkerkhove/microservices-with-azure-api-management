@@ -1,0 +1,116 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Codito - Shipments API",
+        "description": "Shipments APIs of the Codito platform",
+        "contact": {
+            "name": "Codit",
+            "url": "https://codit.eu"
+        }
+    },
+    "host": "microservices-with-apim-monolith.azurewebsites.net",
+    "paths": {
+        "/api/v1/health": {
+            "get": {
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Get Health",
+                "description": "Provides an indication about the health of the scraper",
+                "operationId": "Health_Get",
+                "consumes": [],
+                "produces": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "API is healthy"
+                    },
+                    "503": {
+                        "description": "API is not healthy"
+                    }
+                }
+            }
+        },
+        "/api/v1/shipments/{trackingNumber}": {
+            "get": {
+                "tags": [
+                    "Shipments"
+                ],
+                "summary": "Get Shipment Information",
+                "description": "Provides information about a shipment",
+                "operationId": "Shipment_Get",
+                "consumes": [],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "trackingNumber",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Information about a specific shipment",
+                        "schema": {
+                            "$ref": "#/definitions/ShipmentInformation"
+                        }
+                    },
+                    "400": {
+                        "description": "Request was invalid"
+                    },
+                    "404": {
+                        "description": "Requested product was not found"
+                    },
+                    "503": {
+                        "description": "Something went wrong, please contact support"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ShipmentInformation": {
+            "type": "object",
+            "properties": {
+                "trackingNumber": {
+                    "type": "string"
+                },
+                "status": {
+                    "enum": [
+                        "AwaitingPickup",
+                        "InTransit",
+                        "Delivered"
+                    ],
+                    "type": "string"
+                },
+                "deliveryAddress": {
+                    "$ref": "#/definitions/Address"
+                }
+            }
+        },
+        "Address": {
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "tags": []
+}
