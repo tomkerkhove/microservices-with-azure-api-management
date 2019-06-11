@@ -11,13 +11,12 @@ namespace Demo.Monolith.API.Repositories.InMemory
 {
     public class OrderTableRepository : IOrderRepository
     {
-        private readonly Dictionary<string, Order> _orders = new Dictionary<string, Order>();
-        private readonly TableProvider _tableProvider;
+        private readonly TableStorageAccessor _tableStorageAccessor;
         private const string TableName = "orders";
 
-        public OrderTableRepository(TableProvider tableProvider)
+        public OrderTableRepository(TableStorageAccessor tableStorageAccessor)
         {
-            _tableProvider = tableProvider;
+            _tableStorageAccessor = tableStorageAccessor;
         }
 
         public async Task<string> CreateAsync(Order createdOrder)
@@ -35,14 +34,14 @@ namespace Demo.Monolith.API.Repositories.InMemory
                 CustomerAddress = JsonConvert.SerializeObject(createdOrder.Customer.Address)
             };
 
-            await _tableProvider.PersistAsync(TableName, orderTableEntity);
+            await _tableStorageAccessor.PersistAsync(TableName, orderTableEntity);
 
             return confirmationId;
         }
 
         public async Task<Order> GetAsync(string confirmationId)
         {
-            var persistedOrder = await _tableProvider.GetAsync<OrderTableEntity>(TableName, confirmationId, confirmationId);
+            var persistedOrder = await _tableStorageAccessor.GetAsync<OrderTableEntity>(TableName, confirmationId, confirmationId);
 
             Order order = null;
             if (persistedOrder != null)
