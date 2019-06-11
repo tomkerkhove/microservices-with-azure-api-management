@@ -32,7 +32,7 @@ namespace Demo.Monolith.API
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 });
 
-            services.AddSingleton<IShipmentRepository, InMemoryShipmentRepository>();
+            services.AddScoped<IShipmentRepository, ShipmentsTableRepository>();
             services.AddScoped<IProductRepository, ProductTableRepository>();
             services.AddScoped<IOrderRepository, OrderTableRepository>();
             services.AddScoped<OrderManager>();
