@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using Demo.Monolith.API.OpenAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -10,29 +11,16 @@ namespace Demo.Monolith.API.Extensions
     {
         public static void UseOpenApiSpecifications(this IServiceCollection services)
         {
-            var openApiInformation = new Info
-            {
-                Contact = new Contact
-                {
-                    Name = "Codit",
-                    Url = "https://codit.eu"
-                },
-                Title = "Codito v1",
-                Description = "APIs of the Codito platform",
-                Version = "v1",
-                License = new License
-                {
-                    Name = "MIT",
-                    Url = "https://github.com/tomkerkhove/promitor/LICENSE"
-                }
-            };
-
             var xmlDocumentationPath = GetXmlDocumentationPath(services);
 
             services.AddSwaggerGen(swaggerGenerationOptions =>
             {
                 swaggerGenerationOptions.EnableAnnotations();
-                swaggerGenerationOptions.SwaggerDoc("v1", openApiInformation);
+                swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.Orders, CreateApiInformation("Orders"));
+                swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.Products, CreateApiInformation("Products"));
+                swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.Shipments, CreateApiInformation("Shipments"));
+                swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.ShipmentWebhook, CreateApiInformation("Shipment Webhook"));
+
                 swaggerGenerationOptions.DescribeAllEnumsAsStrings();
 
                 if (string.IsNullOrEmpty(xmlDocumentationPath) == false)
@@ -40,6 +28,22 @@ namespace Demo.Monolith.API.Extensions
                     swaggerGenerationOptions.IncludeXmlComments(xmlDocumentationPath);
                 }
             });
+        }
+
+        private static Info CreateApiInformation(string microserviceName)
+        {
+            var openApiInformation = new Info
+            {
+                Contact = new Contact
+                {
+                    Name = "Codit",
+                    Url = "https://codit.eu"
+                },
+                Title = $"Codito - {microserviceName} API",
+                Description = $"{microserviceName} APIs of the Codito platform",
+                Version = "v1"
+            };
+            return openApiInformation;
         }
 
         private static string GetXmlDocumentationPath(IServiceCollection services)

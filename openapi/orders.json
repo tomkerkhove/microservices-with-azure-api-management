@@ -1,0 +1,236 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Codito - Orders API",
+        "description": "Orders APIs of the Codito platform",
+        "contact": {
+            "name": "Codit",
+            "url": "https://codit.eu"
+        }
+    },
+    "host": "microservices-with-apim-monolith.azurewebsites.net",
+    "paths": {
+        "/api/v1/health": {
+            "get": {
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Get Health",
+                "description": "Provides an indication about the health of the scraper",
+                "operationId": "Health_Get",
+                "consumes": [],
+                "produces": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "API is healthy"
+                    },
+                    "503": {
+                        "description": "API is not healthy"
+                    }
+                }
+            }
+        },
+        "/api/v1/orders": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Create New Order",
+                "description": "Provide capability create a new order for products from our catalog",
+                "operationId": "Order_Create",
+                "consumes": [
+                    "application/json-patch+json",
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "orderRequest",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Order was successfully created",
+                        "schema": {
+                            "$ref": "#/definitions/OrderConfirmation"
+                        }
+                    },
+                    "503": {
+                        "description": "Something went wrong, please contact support"
+                    }
+                }
+            }
+        },
+        "/api/v1/orders/{confirmationId}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get Order",
+                "description": "Provide information about a previously created order",
+                "operationId": "Order_Get",
+                "consumes": [],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "confirmationId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Information about a specific order",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    },
+                    "400": {
+                        "description": "Request was invalid"
+                    },
+                    "404": {
+                        "description": "Requested product was not found"
+                    },
+                    "503": {
+                        "description": "Something went wrong, please contact support"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Order": {
+            "type": "object",
+            "properties": {
+                "customer": {
+                    "$ref": "#/definitions/Customer"
+                },
+                "basket": {
+                    "uniqueItems": false,
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OrderLine"
+                    }
+                }
+            }
+        },
+        "Customer": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "address": {
+                    "$ref": "#/definitions/Address"
+                }
+            }
+        },
+        "OrderLine": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "product": {
+                    "$ref": "#/definitions/Product"
+                }
+            }
+        },
+        "Address": {
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "format": "double",
+                    "type": "number"
+                }
+            }
+        },
+        "OrderConfirmation": {
+            "type": "object",
+            "properties": {
+                "confirmationId": {
+                    "type": "string"
+                },
+                "shipmentInformation": {
+                    "$ref": "#/definitions/ShipmentInformation"
+                },
+                "customer": {
+                    "$ref": "#/definitions/Customer"
+                },
+                "basket": {
+                    "uniqueItems": false,
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OrderLine"
+                    }
+                }
+            }
+        },
+        "ShipmentInformation": {
+            "type": "object",
+            "properties": {
+                "trackingNumber": {
+                    "type": "string"
+                },
+                "status": {
+                    "enum": [
+                        "AwaitingPickup",
+                        "InTransit",
+                        "Delivered"
+                    ],
+                    "type": "string"
+                },
+                "deliveryAddress": {
+                    "$ref": "#/definitions/Address"
+                }
+            }
+        }
+    },
+    "tags": []
+}

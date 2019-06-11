@@ -1,0 +1,96 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Codito - Shipment Webhook API",
+        "description": "Shipment Webhook APIs of the Codito platform",
+        "contact": {
+            "name": "Codit",
+            "url": "https://codit.eu"
+        }
+    },
+    "host": "microservices-with-apim-monolith.azurewebsites.net",
+    "paths": {
+        "/api/v1/health": {
+            "get": {
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Get Health",
+                "description": "Provides an indication about the health of the scraper",
+                "operationId": "Health_Get",
+                "consumes": [],
+                "produces": [],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "API is healthy"
+                    },
+                    "503": {
+                        "description": "API is not healthy"
+                    }
+                }
+            }
+        },
+        "/api/v1/shipments": {
+            "post": {
+                "tags": [
+                    "Shipments"
+                ],
+                "summary": "Update Shipment Status",
+                "description": "Webhook for external shipment partners to provide updates about a shipment",
+                "operationId": "Shipment_UpdateStatus",
+                "consumes": [
+                    "application/json-patch+json",
+                    "application/json",
+                    "text/json",
+                    "application/*+json"
+                ],
+                "produces": [],
+                "parameters": [
+                    {
+                        "name": "shipmentStatusUpdate",
+                        "in": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ShipmentStatusUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update about a specific shipment and its status"
+                    },
+                    "400": {
+                        "description": "Request was invalid"
+                    },
+                    "404": {
+                        "description": "Requested product was not found"
+                    },
+                    "503": {
+                        "description": "Something went wrong, please contact support"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ShipmentStatusUpdate": {
+            "type": "object",
+            "properties": {
+                "trackingNumber": {
+                    "type": "string"
+                },
+                "status": {
+                    "enum": [
+                        "AwaitingPickup",
+                        "InTransit",
+                        "Delivered"
+                    ],
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "tags": []
+}
