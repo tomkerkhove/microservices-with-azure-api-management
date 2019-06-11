@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Demo.Monolith.API.Contracts.v1;
 using Demo.Monolith.API.Data.Contracts.v1;
@@ -41,7 +42,11 @@ namespace Demo.Monolith.API.Repositories.InMemory
 
         public async Task<ShipmentInformation> GetAsync(string trackingNumber)
         {
-            var shipmentTableEntry = await _tableStorageAccessor.GetAsync<ShipmentTableEntity>(TableName, trackingNumber, trackingNumber);
+            var shipmentTableEntry = await GetShipmentTableEntryAsync(trackingNumber);
+            if (shipmentTableEntry == null)
+            {
+                return null;
+            }
 
             var shipmentInformation = MapToContract(shipmentTableEntry);
             return shipmentInformation;
@@ -50,14 +55,17 @@ namespace Demo.Monolith.API.Repositories.InMemory
         public async Task UpdateAsync(ShipmentStatusUpdate shipmentStatusUpdate)
         {
             var shipmentTableEntry = await GetShipmentTableEntryAsync(shipmentStatusUpdate.TrackingNumber);
+
+            shipmentTableEntry.RowKey = DateTimeOffset.UtcNow.ToString("s");
             shipmentTableEntry.Status = shipmentStatusUpdate.Status.ToString();
 
-            await _tableStorageAccessor.UpdateAsync(TableName, shipmentTableEntry);
+            await _tableStorageAccessor.PersistAsync(TableName, shipmentTableEntry);
         }
 
         private async Task<ShipmentTableEntity> GetShipmentTableEntryAsync(string trackingNumber)
         {
-            return await _tableStorageAccessor.GetAsync<ShipmentTableEntity>(TableName, trackingNumber, trackingNumber);
+            var shipmentUpdates = await _tableStorageAccessor.GetAsync<ShipmentTableEntity>(TableName, trackingNumber);
+            return shipmentUpdates.OrderByDescending(shipmentUpdate => shipmentUpdate.RowKey).FirstOrDefault();
         }
 
         private ShipmentInformation MapToContract(ShipmentTableEntity shipmentTableEntry)
@@ -75,7 +83,7 @@ namespace Demo.Monolith.API.Repositories.InMemory
             return new ShipmentTableEntity
             {
                 PartitionKey = shipmentInformation.TrackingNumber,
-                RowKey = shipmentInformation.TrackingNumber,
+                RowKey = DateTimeOffset.UtcNow.ToString("s"),
                 TrackingNumber = shipmentInformation.TrackingNumber,
                 DeliveryAddress = JsonConvert.SerializeObject(shipmentInformation.DeliveryAddress),
                 Status = shipmentInformation.Status.ToString(),

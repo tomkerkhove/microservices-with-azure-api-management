@@ -58,15 +58,6 @@ namespace Demo.Monolith.API.Data.Providers
             return foundItems.ToList();
         }
 
-        public async Task UpdateAsync<TEntity>(string tableName, TEntity tableEntity)
-            where TEntity : TableEntity, new()
-        {
-            var table = await GetTableAsync(tableName);
-
-            var tableOperation = TableOperation.Replace(tableEntity);
-            await table.ExecuteAsync(tableOperation);
-        }
-
         private async Task<CloudTable> GetTableAsync(string tableName)
         {
             CloudTable table = _tableClient.GetTableReference(tableName);

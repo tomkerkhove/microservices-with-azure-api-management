@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Demo.Monolith.API.Contracts.v1;
 using Demo.Monolith.API.Data.Contracts.v1;
@@ -26,7 +27,7 @@ namespace Demo.Monolith.API.Repositories.InMemory
             var orderTableEntity = new OrderTableEntity
             {
                 PartitionKey = confirmationId,
-                RowKey = confirmationId,
+                RowKey = DateTimeOffset.UtcNow.ToString("s"),
                 ConfirmationId = confirmationId,
                 CustomerFirstName = createdOrder.Customer.FirstName,
                 CustomerLastName = createdOrder.Customer.LastName,
@@ -41,24 +42,26 @@ namespace Demo.Monolith.API.Repositories.InMemory
 
         public async Task<Order> GetAsync(string confirmationId)
         {
-            var persistedOrder = await _tableStorageAccessor.GetAsync<OrderTableEntity>(TableName, confirmationId, confirmationId);
+            var persistedOrderUpdates = await _tableStorageAccessor.GetAsync<OrderTableEntity>(TableName, confirmationId);
 
             Order order = null;
-            if (persistedOrder != null)
+            if (persistedOrderUpdates.Any())
             {
+                var mostRecentOrderUpdate = persistedOrderUpdates.OrderByDescending(orderUpdate => orderUpdate.RowKey).First();
+
                 order = new Order
                 {
-                    Basket = JsonConvert.DeserializeObject<List<OrderLine>>(persistedOrder.Basket),
+                    Basket = JsonConvert.DeserializeObject<List<OrderLine>>(mostRecentOrderUpdate.Basket),
                     Customer = new Customer
                     {
-                        FirstName = persistedOrder.CustomerFirstName,
-                        LastName = persistedOrder.CustomerLastName
+                        FirstName = mostRecentOrderUpdate.CustomerFirstName,
+                        LastName = mostRecentOrderUpdate.CustomerLastName
                     }
                 };
 
-                if (persistedOrder.CustomerAddress != null)
+                if (mostRecentOrderUpdate.CustomerAddress != null)
                 {
-                    order.Customer.Address = JsonConvert.DeserializeObject<Address>(persistedOrder.CustomerAddress);
+                    order.Customer.Address = JsonConvert.DeserializeObject<Address>(mostRecentOrderUpdate.CustomerAddress);
                 }
             }
 
