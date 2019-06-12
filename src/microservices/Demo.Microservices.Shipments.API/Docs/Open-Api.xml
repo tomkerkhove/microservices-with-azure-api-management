@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Demo.Microservices.Shipments.API</name>
+    </assembly>
+    <members>
+        <member name="M:Demo.Microservices.Shipments.API.Controllers.HealthController.Get">
+            <summary>
+                Get Health
+            </summary>
+            <remarks>Provides an indication about the health of the scraper</remarks>
+            <response code="200">API is healthy</response>
+            <response code="503">API is not healthy</response>
+        </member>
+        <member name="M:Demo.Microservices.Shipments.API.Controllers.ShipmentsController.Get(System.String)">
+            <summary>
+                Get Shipment Information
+            </summary>
+            <remarks>Provides information about a shipment</remarks>
+            <response code="200">Information about a specific shipment</response>
+            <response code="400">Request was invalid</response>
+            <response code="404">Requested product was not found</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
+        <member name="M:Demo.Microservices.Shipments.API.Controllers.ShipmentsController.Create(Demo.Microservices.Shipments.API.Contracts.v1.Address)">
+            <summary>
+                Create New Shipment
+            </summary>
+            <remarks>Creates a new request to ship to an address</remarks>
+            <response code="201">Shipment was initiated</response>
+            <response code="400">Request was invalid</response>
+            <response code="404">Requested product was not found</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
+        <member name="M:Demo.Microservices.Shipments.API.Controllers.ShipmentsController.Shipment_UpdateStatus(Demo.Microservices.Shipments.API.Contracts.v1.ShipmentStatusUpdate)">
+            <summary>
+                Update Shipment Status
+            </summary>
+            <remarks>Webhook for external shipment partners to provide updates about a shipment</remarks>
+            <response code="200">Update about a specific shipment and its status</response>
+            <response code="400">Request was invalid</response>
+            <response code="404">Requested product was not found</response>
+            <response code="503">Something went wrong, please contact support</response>
+        </member>
+        <member name="T:Demo.Microservices.Shipments.API.Extensions.IApplicationBuilderExtensions">
+            <summary>
+            Provides an Application Builder extension for the Swagger/OpenAPI integration
+            </summary>
+        </member>
+        <member name="M:Demo.Microservices.Shipments.API.Extensions.IApplicationBuilderExtensions.UseOpenApiUi(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Add OpenAPI specification generation
+            </summary>
+            <param name="app">The ApplicationBuilder instance</param>
+            <param name="provider">The APIVersionDescriptionProvider</param>
+        </member>
+    </members>
+</doc>
