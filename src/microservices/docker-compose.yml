@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  demo.microservices.orders.api:
+    image: tomkerkhove/demo.microservices.orders.api
+    build:
+      context: .
+      dockerfile: Demo.Microservices.Orders.API/Dockerfile
+
+  demo.microservices.products.api:
+    image: tomkerkhove/demo.microservices.products.api
+    build:
+      context: .
+      dockerfile: Demo.Microservices.Products.API/Dockerfile
+
+
+  demo.microservices.shipments.api:
+    image: tomkerkhove/demo.microservices.shipments.api
+    build:
+      context: .
+      dockerfile: Demo.Microservices.Shipments.API/Dockerfile

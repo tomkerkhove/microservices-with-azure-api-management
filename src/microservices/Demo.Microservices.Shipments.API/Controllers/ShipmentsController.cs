@@ -69,7 +69,7 @@ namespace Demo.Microservices.Shipments.API.Controllers
         /// <response code="400">Request was invalid</response>
         /// <response code="404">Requested product was not found</response>
         /// <response code="503">Something went wrong, please contact support</response>
-        [HttpPost]
+        [HttpPost("webhook")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [SwaggerOperation(OperationId = "Shipment_UpdateStatus")]
         [ApiExplorerSettings(GroupName = OpenApiCategories.ShipmentWebhook)]

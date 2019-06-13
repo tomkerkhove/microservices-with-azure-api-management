@@ -68,7 +68,7 @@ namespace Demo.Microservices.Products.API.Data.Providers
 
         private CloudTableClient CreateTableClient(IConfiguration configuration)
         {
-            var tableConnectionString = configuration["TableConnectionString"];
+            var tableConnectionString = configuration["AZURESTORAGE_CONNECTIONSTRING"];
             var storageAccount = CloudStorageAccount.Parse(tableConnectionString);
             return storageAccount.CreateCloudTableClient();
         }
