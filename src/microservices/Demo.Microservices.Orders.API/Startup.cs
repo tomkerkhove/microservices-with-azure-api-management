@@ -3,12 +3,14 @@ using Demo.Microservices.Orders.API.Extensions;
 using Demo.Microservices.Orders.API.Managers;
 using Demo.Microservices.Orders.API.Repositories.InMemory;
 using Demo.Microservices.Orders.API.Repositories.Interfaces;
+using Demo.Microservices.Orders.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using IShipmentService = Demo.Microservices.Orders.API.Services.Interfaces.IShipmentService;
 
 namespace Demo.Microservices.Orders.API
 {
@@ -32,8 +34,7 @@ namespace Demo.Microservices.Orders.API
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 });
 
-            services.AddScoped<IShipmentRepository, ShipmentsTableRepository>();
-            services.AddScoped<IProductRepository, ProductTableRepository>();
+            services.AddScoped<IShipmentService, ShipmentService>();
             services.AddScoped<IOrderRepository, OrderTableRepository>();
             services.AddScoped<OrderManager>();
             services.AddScoped<TableStorageAccessor>();

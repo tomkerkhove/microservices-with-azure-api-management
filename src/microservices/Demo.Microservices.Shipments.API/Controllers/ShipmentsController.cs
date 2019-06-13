@@ -53,6 +53,7 @@ namespace Demo.Microservices.Shipments.API.Controllers
         /// <response code="503">Something went wrong, please contact support</response>
         [HttpPost]
         [SwaggerOperation(OperationId = "Shipment_Create")]
+        [ProducesResponseType(typeof(ShipmentInformation), (int)HttpStatusCode.Created)]
         [ApiExplorerSettings(GroupName = OpenApiCategories.ShipmentManagement)]
         public async Task<IActionResult> Create([FromBody] Address address)
         {
