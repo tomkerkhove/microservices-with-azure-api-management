@@ -1,4 +1,5 @@
-﻿using Demo.Microservices.Orders.API.Data.Providers;
+﻿using Arcus.WebApi.Logging;
+using Demo.Microservices.Orders.API.Data.Providers;
 using Demo.Microservices.Orders.API.Extensions;
 using Demo.Microservices.Orders.API.Managers;
 using Demo.Microservices.Orders.API.Repositories.InMemory;
@@ -56,6 +57,7 @@ namespace Demo.Microservices.Orders.API
             }
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseMvc();
             app.UseOpenApiUi();
         }
