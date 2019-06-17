@@ -1,0 +1,123 @@
+resources:
+- repo: self
+trigger:
+- master
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - src/*
+    - .azure-devops/ci.yaml
+variables:
+  DotNet.SDK.Version: '2.2.300'
+  Images.Orders.Name: 'coditeu/microservices-with-api-management-services-order'
+  Images.Products.Name: 'coditeu/microservices-with-api-management-services-product'
+  Images.Shipments.Name: 'coditeu/microservices-with-api-management-services-shipment'
+stages:
+- stage: Monolith
+  displayName: 'Monolith'
+  dependsOn: []
+  jobs:
+   - job: Build
+     displayName: 'Build and Push Product Docker image'
+     pool:
+       vmImage: ubuntu-16.04
+     steps:
+     - task: DotNetCoreInstaller@0
+       displayName: 'Install .NET SDK'
+       inputs:
+        version: '$(DotNet.SDK.Version)'
+     - task: DotNetCoreCLI@1
+       displayName: Build
+       inputs:
+        projects: './src/monolith/Demo.sln'
+        arguments: '--configuration Release'
+- stage: Orders
+  displayName: 'Order Service'
+  dependsOn: []
+  jobs:
+   - job: Build
+     displayName: 'Build and Push Order Docker image'
+     pool:
+       vmImage: ubuntu-16.04
+     steps:
+     - task: DotNetCoreInstaller@0
+       displayName: 'Install .NET SDK'
+       inputs:
+        version: '$(DotNet.SDK.Version)'
+     - task: Docker@1
+       displayName: 'Build Docker image'
+       inputs:
+        dockerFile: ./src/microservices/Demo.Microservices.Orders.API/Dockerfile
+        imageName: '$(Images.Orders.Name)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: ./src/microservices/
+     - task: Docker@1
+       displayName: 'Push ''latest'' to Docker Hub'
+       inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        imageName: '$(Images.Orders.Name):latest'
+       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+- stage: Products
+  displayName: 'Product Service'
+  dependsOn: []
+  jobs:
+   - job: Build
+     displayName: 'Build and Push Product Docker image'
+     pool:
+       vmImage: ubuntu-16.04
+     steps:
+     - task: DotNetCoreInstaller@0
+       displayName: 'Install .NET SDK'
+       inputs:
+        version: '$(DotNet.SDK.Version)'
+     - task: Docker@1
+       displayName: 'Build Docker image'
+       inputs:
+        dockerFile: ./src/microservices/Demo.Microservices.Products.API/Dockerfile
+        imageName: '$(Images.Products.Name)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: ./src/microservices/
+     - task: Docker@1
+       displayName: 'Push ''latest'' to Docker Hub'
+       inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        imageName: '$(Images.Products.Name):latest'
+       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+- stage: Shipments
+  displayName: 'Shipment Service'
+  dependsOn: []
+  jobs:
+   - job: Build
+     displayName: 'Build and Push Shipment Docker image'
+     pool:
+       vmImage: ubuntu-16.04
+     steps:
+     - task: DotNetCoreInstaller@0
+       displayName: 'Install .NET SDK'
+       inputs:
+        version: '$(DotNet.SDK.Version)'
+     - task: Docker@1
+       displayName: 'Build Docker image'
+       inputs:
+        dockerFile: ./src/microservices/Demo.Microservices.Shipments.API/Dockerfile
+        imageName: '$(Images.Shipments.Name)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: ./src/microservices/
+     - task: Docker@1
+       displayName: 'Push ''latest'' to Docker Hub'
+       inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        imageName: '$(Images.Shipments.Name):latest'
+       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
