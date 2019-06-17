@@ -1,8 +1,8 @@
 ﻿using Arcus.WebApi.Logging;
-using Demo.Microservices.Shipments.API.Data.Providers;
 using Demo.Microservices.Shipments.API.Extensions;
-using Demo.Microservices.Shipments.API.Repositories.InMemory;
-using Demo.Microservices.Shipments.API.Repositories.Interfaces;
+using Demo.Microservices.Shipments.Data.Providers;
+using Demo.Microservices.Shipments.Data.Repositories.InMemory;
+using Demo.Microservices.Shipments.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

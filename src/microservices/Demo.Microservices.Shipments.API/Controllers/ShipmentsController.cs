@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using Demo.Microservices.Shipments.API.Contracts.v1;
-using Demo.Microservices.Shipments.API.Exceptions;
 using Demo.Microservices.Shipments.API.OpenAPI;
-using Demo.Microservices.Shipments.API.Repositories.Interfaces;
+using Demo.Microservices.Shipments.Contracts.v1;
+using Demo.Microservices.Shipments.Data.Exceptions;
+using Demo.Microservices.Shipments.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -69,34 +69,6 @@ namespace Demo.Microservices.Shipments.API.Controllers
             _logger.LogInformation("Shipment {TrackingNumber} was created to deliver at {DeliverAddress}", shipmentInformation.TrackingNumber, shipmentInformation.DeliveryAddress);
 
             return CreatedAtAction(nameof(Get), new { trackingNumber = shipmentInformation.TrackingNumber }, shipmentInformation);
-        }
-
-        /// <summary>
-        ///     Update Shipment Status
-        /// </summary>
-        /// <remarks>Webhook for external shipment partners to provide updates about a shipment</remarks>
-        /// <response code="200">Update about a specific shipment and its status</response>
-        /// <response code="400">Request was invalid</response>
-        /// <response code="404">Requested product was not found</response>
-        /// <response code="503">Something went wrong, please contact support</response>
-        [HttpPost("webhook")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [SwaggerOperation(OperationId = "Shipment_UpdateStatus")]
-        [ApiExplorerSettings(GroupName = OpenApiCategories.ShipmentWebhook)]
-        public async Task<IActionResult> Shipment_UpdateStatus([FromBody] ShipmentStatusUpdate shipmentStatusUpdate)
-        {
-            try
-            {
-                await _shipmentRepository.UpdateAsync(shipmentStatusUpdate);
-
-                _logger.LogInformation("Shipment {TrackingNumber} was updated to status", shipmentStatusUpdate.TrackingNumber, shipmentStatusUpdate.Status);
-
-                return Ok();
-            }
-            catch (ShipmentNotFoundException)
-            {
-                return NotFound();
-            }
         }
     }
 }

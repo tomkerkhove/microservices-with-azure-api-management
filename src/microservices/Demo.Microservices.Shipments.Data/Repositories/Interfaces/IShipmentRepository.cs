@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Demo.Microservices.Shipments.API.Contracts.v1;
+﻿using System.Threading.Tasks;
+using Demo.Microservices.Shipments.Contracts.v1;
 
-namespace Demo.Microservices.Shipments.API.Repositories.Interfaces
+namespace Demo.Microservices.Shipments.Data.Repositories.Interfaces
 {
     public interface IShipmentRepository
     {

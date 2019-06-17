@@ -4,6 +4,5 @@
     {
         public const string Shipments = "shipments";
         public const string ShipmentManagement = "shipment_management";
-        public const string ShipmentWebhook = "shipment_webhook";
     }
 }

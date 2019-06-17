@@ -7,7 +7,7 @@ using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Demo.Microservices.Shipments.API.Data.Providers
+namespace Demo.Microservices.Shipments.Data.Providers
 {
     public class TableStorageAccessor
     {
