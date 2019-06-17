@@ -1,4 +1,3 @@
-name: $(Image.Version)
 resources:
 - repo: self
 trigger: none
@@ -18,18 +17,11 @@ stages:
        displayName: 'Install .NET SDK'
        inputs:
         version: '$(DotNet.SDK.Version)'
-     - powershell: |
-        Write-Host "Determining '{major}.{minor}' for '$(Image.Version)'"
-        $index = "$(Image.Version)".IndexOf(".", 2);
-        $majorMinorVersion = "$(Image.Version)".Substring(0, $index);
-        Write-Host "Found version '$majorMinorVersion'"
-        Write-Output ("##vso[task.setvariable variable=Image.MajorMinorVersion;]$majorMinorVersion")
-       displayName: 'Determine ''{major}.{minor}'' version'
      - task: Docker@1
        displayName: 'Build Docker image'
        inputs:
         dockerFile: ./src/microservices/Demo.Microservices.Orders.API/Dockerfile
-        imageName: '$(Image.TaggedName)'
+        imageName: '$(Images.Orders.Name)'
         includeLatestTag: true
         useDefaultContext: false
         buildContext: ./src/
