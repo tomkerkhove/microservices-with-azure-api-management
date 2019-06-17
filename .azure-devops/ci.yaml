@@ -14,10 +14,11 @@ variables:
   DotNet.SDK.Version: '2.2.300'
   Images.Orders.Name: 'coditeu/microservices-with-api-management-services-order'
 stages:
-- stage: 'Order Service'
-  displayName: 'Build and Push Order Docker image'
+- stage: Orders
+  displayName: 'Order Service'
   jobs:
    - job: Build
+     displayName: 'Build and Push Order Docker image'
      pool:
        vmImage: ubuntu-16.04
      steps:
