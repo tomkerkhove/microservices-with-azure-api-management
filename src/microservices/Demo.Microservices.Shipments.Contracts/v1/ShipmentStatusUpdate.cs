@@ -1,4 +1,4 @@
-﻿namespace Demo.Microservices.Shipments.API.Contracts.v1
+﻿namespace Demo.Microservices.Shipments.Contracts.v1
 {
     public class ShipmentStatusUpdate
     {

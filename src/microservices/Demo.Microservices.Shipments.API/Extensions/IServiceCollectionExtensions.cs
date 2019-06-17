@@ -18,7 +18,6 @@ namespace Demo.Microservices.Shipments.API.Extensions
                 swaggerGenerationOptions.EnableAnnotations();
                 swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.Shipments, CreateApiInformation("Shipments"));
                 swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.ShipmentManagement, CreateApiInformation("Shipment Management"));
-                swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.ShipmentWebhook, CreateApiInformation("Shipment Webhook"));
 
                 swaggerGenerationOptions.DescribeAllEnumsAsStrings();
 

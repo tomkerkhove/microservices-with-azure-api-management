@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Demo.Microservices.Shipments.API.Exceptions
+namespace Demo.Microservices.Shipments.Data.Exceptions
 {
     public class ShipmentNotFoundException : Exception
     {

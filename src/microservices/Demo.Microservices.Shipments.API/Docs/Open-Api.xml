@@ -22,22 +22,12 @@
             <response code="404">Requested product was not found</response>
             <response code="503">Something went wrong, please contact support</response>
         </member>
-        <member name="M:Demo.Microservices.Shipments.API.Controllers.ShipmentsController.Create(Demo.Microservices.Shipments.API.Contracts.v1.Address)">
+        <member name="M:Demo.Microservices.Shipments.API.Controllers.ShipmentsController.Create(Demo.Microservices.Shipments.Contracts.v1.Address)">
             <summary>
                 Create New Shipment
             </summary>
             <remarks>Creates a new request to ship to an address</remarks>
             <response code="201">Shipment was initiated</response>
-            <response code="400">Request was invalid</response>
-            <response code="404">Requested product was not found</response>
-            <response code="503">Something went wrong, please contact support</response>
-        </member>
-        <member name="M:Demo.Microservices.Shipments.API.Controllers.ShipmentsController.Shipment_UpdateStatus(Demo.Microservices.Shipments.API.Contracts.v1.ShipmentStatusUpdate)">
-            <summary>
-                Update Shipment Status
-            </summary>
-            <remarks>Webhook for external shipment partners to provide updates about a shipment</remarks>
-            <response code="200">Update about a specific shipment and its status</response>
             <response code="400">Request was invalid</response>
             <response code="404">Requested product was not found</response>
             <response code="503">Something went wrong, please contact support</response>

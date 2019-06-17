@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 
-namespace Demo.Microservices.Shipments.API.Data.Contracts.v1
+namespace Demo.Microservices.Shipments.Data.Contracts.v1
 {
     public class ShipmentTableEntity : TableEntity
     {

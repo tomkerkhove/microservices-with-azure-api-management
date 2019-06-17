@@ -1,12 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Demo.Microservices.Shipments.API.Contracts.v1;
-using Demo.Microservices.Shipments.API.Exceptions;
-using Demo.Microservices.Shipments.API.Repositories.Interfaces;
+using Demo.Microservices.Shipments.Contracts.v1;
+using Demo.Microservices.Shipments.Data.Exceptions;
+using Demo.Microservices.Shipments.Data.Repositories.Interfaces;
 
-namespace Demo.Microservices.Shipments.API.Repositories.InMemory
+namespace Demo.Microservices.Shipments.Data.Repositories.InMemory
 {
     public class InMemoryShipmentRepository : IShipmentRepository
     {

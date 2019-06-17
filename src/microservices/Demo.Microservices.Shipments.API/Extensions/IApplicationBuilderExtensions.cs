@@ -21,7 +21,6 @@ namespace Demo.Microservices.Shipments.API.Extensions
             {
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Shipments}/swagger.json", "Codito - Shipments API");
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.ShipmentManagement}/swagger.json", "Codito - Shipment Management API");
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.ShipmentWebhook}/swagger.json", "Codito - Shipment Webhook API");
 
                 swaggerUiOptions.DisplayOperationId();
                 swaggerUiOptions.EnableDeepLinking();

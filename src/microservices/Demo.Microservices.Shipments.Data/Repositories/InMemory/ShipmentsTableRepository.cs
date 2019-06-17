@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Demo.Microservices.Shipments.API.Contracts.v1;
-using Demo.Microservices.Shipments.API.Data.Contracts.v1;
-using Demo.Microservices.Shipments.API.Data.Providers;
-using Demo.Microservices.Shipments.API.Exceptions;
-using Demo.Microservices.Shipments.API.Repositories.Interfaces;
+using Demo.Microservices.Shipments.Contracts.v1;
+using Demo.Microservices.Shipments.Data.Contracts.v1;
+using Demo.Microservices.Shipments.Data.Providers;
+using Demo.Microservices.Shipments.Data.Repositories.Interfaces;
 using Newtonsoft.Json;
 
-namespace Demo.Microservices.Shipments.API.Repositories.InMemory
+namespace Demo.Microservices.Shipments.Data.Repositories.InMemory
 {
     public class ShipmentsTableRepository : IShipmentRepository
     {
@@ -20,8 +18,6 @@ namespace Demo.Microservices.Shipments.API.Repositories.InMemory
         {
             _tableStorageAccessor = tableStorageAccessor;
         }
-
-        private readonly Dictionary<string, ShipmentInformation> _shipments = new Dictionary<string, ShipmentInformation>();
 
         public async Task<ShipmentInformation> CreateAsync(Address address)
         {
@@ -70,11 +66,13 @@ namespace Demo.Microservices.Shipments.API.Repositories.InMemory
 
         private ShipmentInformation MapToContract(ShipmentTableEntity shipmentTableEntry)
         {
+            var shipmentStatus = (ShipmentStatus)Enum.Parse(typeof(ShipmentStatus), shipmentTableEntry.Status);
+
             return new ShipmentInformation
             {
                 TrackingNumber = shipmentTableEntry.TrackingNumber,
                 DeliveryAddress = JsonConvert.DeserializeObject<Address>(shipmentTableEntry.DeliveryAddress),
-                Status = Enum.Parse<ShipmentStatus>(shipmentTableEntry.Status),
+                Status = shipmentStatus,
             };
         }
 
