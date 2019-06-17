@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codito-microservices-products
+  labels:
+    app: codito
+    microservice: products
+spec:
+  selector:
+    matchLabels:
+      app: codito
+      microservice: products
+  template:
+    metadata:
+      labels:
+        app: codito
+        microservice: products
+    spec:
+      containers:
+      - name: products-api
+        image: coditeu/microservices-with-api-management-services-product
+        ports:
+        - containerPort: 80
+        env:
+        - name: AZURESTORAGE_CONNECTIONSTRING
+          valueFrom:
+            secretKeyRef:
+             name: products-secrets
+             key: AZURESTORAGE_CONNECTIONSTRING
+        livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 80
+        readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: codito-microservices-products-loadbalancer-service
+  labels:
+    app: codito
+    microservice: products
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8888
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: codito
+    microservice: products
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: products-secrets
+  labels:
+    app: codito
+    microservice: products
+data:
+  AZURESTORAGE_CONNECTIONSTRING: RGVmYXVsdEVuZHBvaW50c1Byb3RvY29sPWh0dHBzO0FjY291bnROYW1lPW1pY3Jvc2VydmljZXN3aXRoYXBpbTtBY2NvdW50S2V5PWtaUURoeGZEWXdoTmNFcmZ0OE5WQUJyNDduVVg5MGpFSUZBcG10OFh5WGdSZzhoVTNiYzk5bm1BY2NURncwN3dDTlkrcEcwbi9IQ1NXVVZpYnhvd0N3PT07RW5kcG9pbnRTdWZmaXg9Y29yZS53aW5kb3dzLm5ldA==
