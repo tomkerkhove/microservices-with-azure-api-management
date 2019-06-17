@@ -1,4 +1,5 @@
-﻿using Demo.Microservices.Shipments.API.Data.Providers;
+﻿using Arcus.WebApi.Logging;
+using Demo.Microservices.Shipments.API.Data.Providers;
 using Demo.Microservices.Shipments.API.Extensions;
 using Demo.Microservices.Shipments.API.Repositories.InMemory;
 using Demo.Microservices.Shipments.API.Repositories.Interfaces;
@@ -51,6 +52,7 @@ namespace Demo.Microservices.Shipments.API
             }
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseMvc();
             app.UseOpenApiUi();
         }

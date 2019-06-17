@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Demo.Microservices.Orders.API.Data.Contracts.v1;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Demo.Microservices.Orders.API.Data.Providers
 {
     public class TableStorageAccessor
     {
         private readonly CloudTableClient _tableClient;
+        private readonly ILogger<TableStorageAccessor> _logger;
 
-        public TableStorageAccessor(IConfiguration configuration)
+        public TableStorageAccessor(IConfiguration configuration, ILogger<TableStorageAccessor> logger)
         {
+            _logger = logger;
             _tableClient = CreateTableClient(configuration);
         }
 
@@ -70,6 +72,8 @@ namespace Demo.Microservices.Orders.API.Data.Providers
         {
             var tableConnectionString = configuration["AZURESTORAGE_CONNECTIONSTRING"];
             var storageAccount = CloudStorageAccount.Parse(tableConnectionString);
+            _logger.LogInformation($"Connecting to Azure Storage Account '{storageAccount.Credentials.AccountName}'");
+
             return storageAccount.CreateCloudTableClient();
         }
     }

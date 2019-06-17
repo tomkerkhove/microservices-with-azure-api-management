@@ -5,6 +5,7 @@ using Demo.Microservices.Shipments.API.Exceptions;
 using Demo.Microservices.Shipments.API.OpenAPI;
 using Demo.Microservices.Shipments.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Demo.Microservices.Shipments.API.Controllers
@@ -15,9 +16,11 @@ namespace Demo.Microservices.Shipments.API.Controllers
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentRepository _shipmentRepository;
+        private readonly ILogger _logger;
 
-        public ShipmentsController(IShipmentRepository shipmentRepository)
+        public ShipmentsController(IShipmentRepository shipmentRepository, ILogger<ShipmentsController> logger)
         {
+            _logger = logger;
             _shipmentRepository = shipmentRepository;
         }
 
@@ -37,8 +40,12 @@ namespace Demo.Microservices.Shipments.API.Controllers
             var shipmentInformation = await _shipmentRepository.GetAsync(trackingNumber);
             if (shipmentInformation == null)
             {
+                _logger.LogInformation("No information found for shipment {TrackingNumber} ", trackingNumber);
+
                 return NotFound();
             }
+
+            _logger.LogInformation("Information found for shipment {TrackingNumber} ", trackingNumber);
 
             return Ok(shipmentInformation);
         }
@@ -58,6 +65,9 @@ namespace Demo.Microservices.Shipments.API.Controllers
         public async Task<IActionResult> Create([FromBody] Address address)
         {
             var shipmentInformation = await _shipmentRepository.CreateAsync(address);
+
+            _logger.LogInformation("Shipment {TrackingNumber} was created to deliver at {DeliverAddress}", shipmentInformation.TrackingNumber, shipmentInformation.DeliveryAddress);
+
             return CreatedAtAction(nameof(Get), new { trackingNumber = shipmentInformation.TrackingNumber }, shipmentInformation);
         }
 
@@ -78,6 +88,9 @@ namespace Demo.Microservices.Shipments.API.Controllers
             try
             {
                 await _shipmentRepository.UpdateAsync(shipmentStatusUpdate);
+
+                _logger.LogInformation("Shipment {TrackingNumber} was updated to status", shipmentStatusUpdate.TrackingNumber, shipmentStatusUpdate.Status);
+
                 return Ok();
             }
             catch (ShipmentNotFoundException)
