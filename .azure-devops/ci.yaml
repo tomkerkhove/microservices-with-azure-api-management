@@ -1,7 +1,15 @@
 resources:
 - repo: self
-trigger: none
-pr: none
+trigger:
+- master
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - src/*
+    - .azure-devops/ci.yaml
 variables:
   DotNet.SDK.Version: '2.2.300'
   Images.Orders.Name: 'coditeu/microservices-with-api-management-services-order'
