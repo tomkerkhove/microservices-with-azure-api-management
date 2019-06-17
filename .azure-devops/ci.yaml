@@ -62,7 +62,7 @@ stages:
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Push an image'
         imageName: '$(Images.Orders.Name):latest'
-        condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 - stage: Products
   displayName: 'Product Service'
   dependsOn: []
@@ -91,7 +91,7 @@ stages:
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Push an image'
         imageName: '$(Images.Products.Name):latest'
-        condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 - stage: Shipments
   displayName: 'Shipment Service'
   dependsOn: []
@@ -120,4 +120,4 @@ stages:
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Push an image'
         imageName: '$(Images.Shipments.Name):latest'
-        condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), ne(variables['Build.Reason'], 'PullRequest'))
+       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
