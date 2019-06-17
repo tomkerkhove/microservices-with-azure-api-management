@@ -18,6 +18,7 @@ variables:
 stages:
 - stage: Orders
   displayName: 'Order Service'
+  dependsOn: []
   jobs:
    - job: Build
      displayName: 'Build and Push Order Docker image'
@@ -46,6 +47,7 @@ stages:
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 - stage: Products
   displayName: 'Product Service'
+  dependsOn: []
   jobs:
    - job: Build
      displayName: 'Build and Push Product Docker image'
@@ -74,6 +76,7 @@ stages:
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 - stage: Shipments
   displayName: 'Shipment Service'
+  dependsOn: []
   jobs:
    - job: Build
      displayName: 'Build and Push Shipment Docker image'
