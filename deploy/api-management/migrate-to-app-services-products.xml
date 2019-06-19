@@ -1,5 +1,6 @@
 <!--
-    Traffic routing is based on https://github.com/Azure/api-management-policy-snippets/blob/master/examples/Random%20load%20balancer.policy.xml
+    Traffic routing is based on official sample:
+        https://github.com/Azure/api-management-policy-snippets/blob/master/examples/Random%20load%20balancer.policy.xml
 -->
 <policies>
     <inbound>
@@ -8,18 +9,11 @@
         <choose>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
                 <!-- Use default host -->
-                <set-header name="X-Runtime" exists-action="override">
-                    <value>Legacy</value>
-                </set-header>
             </when>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 2)">
                 <set-backend-service base-url="https://microservices-with-apim-services-products.azurewebsites.net" />
-                <set-header name="X-Runtime" exists-action="override">
-                    <value>Experiment (App Services with Containers)</value>
-                </set-header>
             </when>
             <otherwise>
-                <!-- Should never happen, but you never know ;) -->
                 <return-response>
                     <set-status code="500" reason="InternalServerError" />
                     <set-header name="Microsoft-Azure-Api-Management-Correlation-Id" exists-action="override">
@@ -37,7 +31,6 @@
         <base />
         <choose>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
-                <!-- Use default host -->
                 <set-header name="X-Runtime" exists-action="override">
                     <value>Legacy</value>
                 </set-header>
