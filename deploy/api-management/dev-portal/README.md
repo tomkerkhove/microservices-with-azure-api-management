@@ -1,4 +1,6 @@
-# Codito's customized Azure API Management developer portal
+# Codito's Developer Portal
+
+Codito wants to brand their Azure API Management Developer Portal so they've decided to fully customize it to align with their branding.
 
 This developer portal experience is currently in [public preview](https://azure.microsoft.com/en-us/updates/new-developer-portal-in-api-management-is-now-in-preview/), breaking changes might be applied.
 
