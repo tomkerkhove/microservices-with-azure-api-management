@@ -1,6 +1,4 @@
-# Kubernetes deployment
-
-Codito's customized Azure API Management developer portal.
+# Codito's customized Azure API Management developer portal
 
 This developer portal experience is currently in [public preview](https://azure.microsoft.com/en-us/updates/new-developer-portal-in-api-management-is-now-in-preview/), breaking changes might be applied.
 
