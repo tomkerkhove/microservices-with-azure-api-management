@@ -1,5 +1,4 @@
-Azure API Management
-==============================
+# Azure API Management
 
 This folder contains all artifacts to deploy to your own Azure API Management resource:
 
