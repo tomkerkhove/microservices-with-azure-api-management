@@ -7,7 +7,7 @@ This developer portal experience is currently in [public preview](https://azure.
 More information:
 - [Azure API Management developer portal GitHub repo](https://github.com/Azure/api-management-developer-portal)
 
-## Self-Hosting the portal
+## Self-Host the portal yourself
 You can run the developer portal yourself:
 1. Change `<tenant>` in `config.json` with the name of your Azure API Management tenant
 2. Configure an Azure Storage Account for static website ([docs](https://github.com/Azure/api-management-developer-portal/wiki/Self-hosting-the-portal#storage-account))
