@@ -28,10 +28,9 @@ But, we need to ensure that
 Use a phased-migration approach to reduce complexity and risk
 
 Microservices are a journey:
-Split the monolith into multiple smaller services
-Ship them as individual containers
-Use as much PaaS as you can, until you need more control.
+1. Split the monolith into multiple smaller services
+2. Ship them as individual containers
 
-Azure App Services & Azure Integration Services are a good starting point.
-
-Easily port your application to Azure Kubernetes Service, if you need more control.
+Use as much PaaS as you can, until you need more control:
+- Azure App Services & Azure Integration Services are a good starting point.
+- Easily port your same application to Azure Kubernetes Service, if you need more control.
