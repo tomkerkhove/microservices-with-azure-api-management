@@ -13,6 +13,14 @@ This is handled by pushing status updates to a Codito webhook endpoint.
 
 ![Codito](./../media/codito.jpg)
 
+## Where are they today?
+
+As of today, Codito is exposing their services via Azure API Management which gives them all the rich API ecosystem features they need ranging from service decoupling, developer portal and user management.
+
+Their monolith is hosted in an Azure Web App which is all written in .NET Core.
+
+![Codito today](./../media/codito-today.png)
+
 ## Transition to microservices
 Codito wants to transition to microservices:
 - Provide capability to easily ship new features
