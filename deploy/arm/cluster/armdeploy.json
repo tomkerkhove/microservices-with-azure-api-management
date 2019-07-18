@@ -43,7 +43,7 @@
                 "agentPoolProfiles": [
                     {
                         "name": "agentpool",
-                        "count": 3,
+                        "count": 1,
                         "vmSize": "Standard_DS2_v2",
                         "osDiskSizeGB": 100,
                         "storageProfile": "ManagedDisks",
