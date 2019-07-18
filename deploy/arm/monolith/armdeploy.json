@@ -2,32 +2,25 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "FunctionApps.Plan.Name": {
-            "defaultValue": "WestEuropePlan",
+        "FunctionApps.ConsumptionPlan.Name": {
             "type": "string"
         },
         "WebApps.Monolith.Name": {
-            "defaultValue": "microservices-with-apim-monolith",
             "type": "string"
         },
         "ApplicationInsights.Name": {
-            "defaultValue": "microservices-with-apim",
             "type": "string"
         },
         "ApiManagement.Name": {
-            "defaultValue": "microservices-with-apim",
             "type": "string"
         },
-        "storageAccounts_microserviceswithapim_name": {
-            "defaultValue": "microserviceswithapim",
+        "Storage.Name": {
             "type": "string"
         },
         "WebApps.Plan.Name": {
-            "defaultValue": "microservices-with-apim-monolith",
             "type": "string"
         },
         "FunctionApps.Webhooks.Name": {
-            "defaultValue": "microservices-with-apim-services-shipment-webhooks",
             "type": "string"
         }
     },
@@ -59,7 +52,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-04-01",
-            "name": "[parameters('storageAccounts_microserviceswithapim_name')]",
+            "name": "[parameters('Storage.Name')]",
             "location": "westeurope",
             "sku": {
                 "name": "Standard_LRS",
@@ -85,7 +78,7 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
-            "name": "[parameters('FunctionApps.Plan.Name')]",
+            "name": "[parameters('FunctionApps.ConsumptionPlan.Name')]",
             "location": "West Europe",
             "sku": {
                 "name": "Y1",
@@ -289,11 +282,11 @@
             "name": "[parameters('FunctionApps.Webhooks.Name')]",
             "location": "West Europe",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('FunctionApps.Plan.Name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', parameters('FunctionApps.ConsumptionPlan.Name'))]"
             ],
             "kind": "functionapp",
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('FunctionApps.Plan.Name'))]"
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('FunctionApps.ConsumptionPlan.Name'))]"
             }
         },
         {

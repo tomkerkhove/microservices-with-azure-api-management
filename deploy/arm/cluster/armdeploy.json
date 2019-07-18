@@ -3,34 +3,27 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "WebApp.Plan.Name": {
-            "defaultValue": "microservices-with-apim-services",
             "type": "string"
         },
         "WebApp.Orders.Name": {
-            "defaultValue": "microservices-with-apim-services-orders",
             "type": "string"
         },
         "WebApp.Products.Name": {
-            "defaultValue": "microservices-with-apim-services-products",
             "type": "string"
         },
         "WebApp.Shipments.Name": {
-            "defaultValue": "microservices-with-apim-services-shipments",
             "type": "string"
         },
         "Kuberenetes.ClusterName": {
-            "defaultValue": "microservices-cluster",
             "type": "string"
         },
         "VirtualNetworks.Name": {
-            "defaultValue": "codit-apim-microservices-on-containers-vnet",
             "type": "string"
         },
         "Kubernetes.ServicePrinciple.ClientId": {
             "type": "string"
         },
         "Monitor.Workspace.Id": {
-            "defaultValue": "/subscriptions/c1537527-c126-428d-8f72-1ac9f2c63c1f/resourceGroups/codit-apim-microservices/providers/microsoft.operationalinsights/workspaces/microservices-with-apim",
             "type": "string"
         }
     },
