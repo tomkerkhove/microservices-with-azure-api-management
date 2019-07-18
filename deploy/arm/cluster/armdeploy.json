@@ -23,6 +23,9 @@
         "Kubernetes.ServicePrinciple.ClientId": {
             "type": "string"
         },
+        "Kubernetes.ServicePrinciple.Secret": {
+            "type": "securestring"
+        },
         "Monitor.Workspace.Id": {
             "type": "string"
         }
@@ -49,7 +52,8 @@
                     }
                 ],
                 "servicePrincipalProfile": {
-                    "clientId": "[parameters('Kubernetes.ServicePrinciple.ClientId')]"
+                    "clientId": "[parameters('Kubernetes.ServicePrinciple.ClientId')]",
+                    "secret": "[parameters('Kubernetes.ServicePrinciple.Secret')]"
                 },
                 "addonProfiles": {
                     "httpApplicationRouting": {
