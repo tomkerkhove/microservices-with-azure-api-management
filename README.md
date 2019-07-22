@@ -7,3 +7,5 @@ Learn about their journey where they decompose a monolith into multiple smaller 
 - [Migrating to Azure Web App for Containers](./docs/migrating-to-web-app-for-containers.md)
 - [Migrating to Azure Kubernetes Service](./docs/migrating-to-kubernetes.md)
 - [Codito Tomorrow](./docs/codito-tomorrow.md)
+
+Curious? [Run it yourself](/deploy) and give it a try!
