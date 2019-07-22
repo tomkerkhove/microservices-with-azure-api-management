@@ -1,0 +1,1283 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "FunctionApps.ConsumptionPlan.Name": {
+            "type": "string"
+        },
+        "WebApps.Monolith.Name": {
+            "type": "string"
+        },
+        "ApplicationInsights.Name": {
+            "type": "string"
+        },
+        "ApiManagement.Name": {
+            "type": "string"
+        },
+        "Storage.Name": {
+            "type": "string"
+        },
+        "WebApps.Plan.Name": {
+            "type": "string"
+        },
+        "FunctionApps.Webhooks.Name": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "apiVersion": "2019-01-01",
+            "name": "[parameters('ApiManagement.Name')]",
+            "location": "West Europe",
+            "sku": {
+                "name": "Developer",
+                "capacity": 1
+            },
+            "properties": {
+                "publisherEmail": "tom.kerkhove@codit.eu",
+                "publisherName": "Codito"
+            }
+        },
+        {
+            "type": "microsoft.insights/components",
+            "apiVersion": "2015-05-01",
+            "name": "[parameters('ApplicationInsights.Name')]",
+            "location": "westeurope",
+            "kind": "web",
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('Storage.Name')]",
+            "location": "westeurope",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            "name": "[parameters('WebApps.Plan.Name')]",
+            "location": "West Europe",
+            "sku": {
+                "name": "S1",
+                "capacity": 1
+            },
+            "kind": "app",
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            "name": "[parameters('FunctionApps.ConsumptionPlan.Name')]",
+            "location": "West Europe",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "properties": {
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Orders API",
+                "apiRevision": "1",
+                "description": "Orders APIs of the Codito platform",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "orders",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Products API",
+                "apiRevision": "1",
+                "description": "Products APIs of the Codito platform",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "products",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Shipments API",
+                "apiRevision": "1",
+                "description": "Shipments APIs of the Codito platform",
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "shipments",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Shipment Webhook API",
+                "apiRevision": "1",
+                "description": "Shipment Webhook APIs of the Codito platform",
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "shipments/webhooks",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "value": "<!--\r\n    IMPORTANT:\r\n    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.\r\n    - Only the <forward-request> policy element can appear within the <backend> section element.\r\n    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.\r\n    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.\r\n    - To add a policy position the cursor at the desired insertion point and click on the round button associated with the policy.\r\n    - To remove a policy, delete the corresponding policy statement from the policy document.\r\n    - Policies are applied in the order of their appearance, from the top down.\r\n-->\r\n<policies>\r\n  <inbound>\r\n    <cors>\r\n      <allowed-origins>\r\n        <origin>*</origin>\r\n      </allowed-origins>\r\n      <allowed-methods>\r\n        <method>*</method>\r\n      </allowed-methods>\r\n      <allowed-headers>\r\n        <header>*</header>\r\n      </allowed-headers>\r\n      <expose-headers>\r\n        <header>*</header>\r\n      </expose-headers>\r\n    </cors>\r\n  </inbound>\r\n  <backend>\r\n    <forward-request />\r\n  </backend>\r\n  <outbound />\r\n  <on-error />\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito Customer Platform",
+                "description": "All APIs in the Codito customer platform offering",
+                "subscriptionRequired": true,
+                "approvalRequired": false,
+                "state": "published"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-integration')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito Integration",
+                "description": "All APIs to integrate with the Codito platform",
+                "subscriptionRequired": true,
+                "approvalRequired": false,
+                "state": "published"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/properties",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/5ced4bf90101080c3c88ab3d')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]",
+                "[resourceId('Microsoft.Insights/components', parameters('ApplicationInsights.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Logger-ApplicationInsights",
+                "value": "[reference(resourceId('Microsoft.Insights/components', parameters('ApplicationInsights.Name')), '2014-04-01').InstrumentationKey]",
+                "secret": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/Health')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Health"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/Orders')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Orders"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/Products')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Products"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/Shipments')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Shipments"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('WebApps.Monolith.Name')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('WebApps.Plan.Name'))]"
+            ],
+            "kind": "app",
+            "properties": {            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('FunctionApps.Webhooks.Name')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('FunctionApps.ConsumptionPlan.Name'))]"
+            ],
+            "kind": "functionapp",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('FunctionApps.ConsumptionPlan.Name'))]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Health_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Health",
+                "method": "GET",
+                "urlTemplate": "/api/v1/health",
+                "templateParameters": [],
+                "description": "Provides an indication about the health of the scraper",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "API is healthy",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "API is not healthy",
+                        "representations": [],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Health_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Health",
+                "method": "GET",
+                "urlTemplate": "/api/v1/health",
+                "templateParameters": [],
+                "description": "Provides an indication about the health of the scraper",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "API is healthy",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "API is not healthy",
+                        "representations": [],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Health_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Health",
+                "method": "GET",
+                "urlTemplate": "/api/v1/health",
+                "templateParameters": [],
+                "description": "Provides an indication about the health of the scraper",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "API is healthy",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "API is not healthy",
+                        "representations": [],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Health_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Health",
+                "method": "GET",
+                "urlTemplate": "/api/v1/health",
+                "templateParameters": [],
+                "description": "Provides an indication about the health of the scraper",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "API is healthy",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "API is not healthy",
+                        "representations": [],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Create')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Create New Order",
+                "method": "POST",
+                "urlTemplate": "/api/v1/orders",
+                "templateParameters": [],
+                "description": "Provide capability create a new order for products from our catalog",
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json-patch+json",
+                            "schemaId": "5cffaa39010108126ce233d6",
+                            "typeName": "Order"
+                        },
+                        {
+                            "contentType": "application/json",
+                            "schemaId": "5cffaa39010108126ce233d6",
+                            "typeName": "Order"
+                        },
+                        {
+                            "contentType": "text/json",
+                            "schemaId": "5cffaa39010108126ce233d6",
+                            "typeName": "Order"
+                        },
+                        {
+                            "contentType": "application/*+json",
+                            "schemaId": "5cffaa39010108126ce233d6",
+                            "typeName": "Order"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 201,
+                        "description": "Order was successfully created",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "schemaId": "5cffaa39010108126ce233d6",
+                                "typeName": "OrderConfirmation"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "schemaId": "5cffaa39010108126ce233d6",
+                                "typeName": "OrderConfirmation"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "schemaId": "5cffaa39010108126ce233d6",
+                                "typeName": "OrderConfirmation"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "Something went wrong, please contact support",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Order",
+                "method": "GET",
+                "urlTemplate": "/api/v1/orders/{confirmationId}",
+                "templateParameters": [
+                    {
+                        "name": "confirmationId",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "Provide information about a previously created order",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Information about a specific order",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "schemaId": "5cffaa39010108126ce233d6",
+                                "typeName": "Order"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "schemaId": "5cffaa39010108126ce233d6",
+                                "typeName": "Order"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "schemaId": "5cffaa39010108126ce233d6",
+                                "typeName": "Order"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 400,
+                        "description": "Request was invalid",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 404,
+                        "description": "Requested product was not found",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "Something went wrong, please contact support",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Product",
+                "method": "GET",
+                "urlTemplate": "/api/v1/products/{id}",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "description": "Format - int32.",
+                        "type": "integer",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "Provides information about a specific product in our catalog",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Information about a specific product",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "schemaId": "5cffaa5e010108126ce233dc",
+                                "typeName": "Product"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "schemaId": "5cffaa5e010108126ce233dc",
+                                "typeName": "Product"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "schemaId": "5cffaa5e010108126ce233dc",
+                                "typeName": "Product"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 400,
+                        "description": "Request was invalid",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 404,
+                        "description": "Requested product was not found",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "Something went wrong, please contact support",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_GetAll')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Products",
+                "method": "GET",
+                "urlTemplate": "/api/v1/products",
+                "templateParameters": [],
+                "description": "Provides information about product catalog",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Overview of our product catalog",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "schemaId": "5cffaa5e010108126ce233dc",
+                                "typeName": "ProductArray"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "schemaId": "5cffaa5e010108126ce233dc",
+                                "typeName": "ProductArray"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "schemaId": "5cffaa5e010108126ce233dc",
+                                "typeName": "ProductArray"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "Something went wrong, please contact support",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Shipment_Get')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Get Shipment Information",
+                "method": "GET",
+                "urlTemplate": "/api/v1/shipments/{trackingNumber}",
+                "templateParameters": [
+                    {
+                        "name": "trackingNumber",
+                        "type": "string",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "Provides information about a shipment",
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Information about a specific shipment",
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "schemaId": "5cffaa8e010108126ce233e2",
+                                "typeName": "ShipmentInformation"
+                            },
+                            {
+                                "contentType": "application/json",
+                                "schemaId": "5cffaa8e010108126ce233e2",
+                                "typeName": "ShipmentInformation"
+                            },
+                            {
+                                "contentType": "text/json",
+                                "schemaId": "5cffaa8e010108126ce233e2",
+                                "typeName": "ShipmentInformation"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 400,
+                        "description": "Request was invalid",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 404,
+                        "description": "Requested product was not found",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "Something went wrong, please contact support",
+                        "representations": [
+                            {
+                                "contentType": "text/plain"
+                            },
+                            {
+                                "contentType": "application/json"
+                            },
+                            {
+                                "contentType": "text/json"
+                            }
+                        ],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Shipment_UpdateStatus')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Update Shipment Status",
+                "method": "POST",
+                "urlTemplate": "/api/v1/shipments",
+                "templateParameters": [],
+                "description": "Webhook for external shipment partners to provide updates about a shipment",
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json-patch+json",
+                            "schemaId": "5cffaaa5010108126ce233e8",
+                            "typeName": "ShipmentStatusUpdate"
+                        },
+                        {
+                            "contentType": "application/json",
+                            "schemaId": "5cffaaa5010108126ce233e8",
+                            "typeName": "ShipmentStatusUpdate"
+                        },
+                        {
+                            "contentType": "text/json",
+                            "schemaId": "5cffaaa5010108126ce233e8",
+                            "typeName": "ShipmentStatusUpdate"
+                        },
+                        {
+                            "contentType": "application/*+json",
+                            "schemaId": "5cffaaa5010108126ce233e8",
+                            "typeName": "ShipmentStatusUpdate"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "Update about a specific shipment and its status",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 400,
+                        "description": "Request was invalid",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 404,
+                        "description": "Requested product was not found",
+                        "representations": [],
+                        "headers": []
+                    },
+                    {
+                        "statusCode": 503,
+                        "description": "Something went wrong, please contact support",
+                        "representations": [],
+                        "headers": []
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "value": "<!--\r\n    IMPORTANT:\r\n    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.\r\n    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.\r\n    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.\r\n    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.\r\n    - To remove a policy, delete the corresponding policy statement from the policy document.\r\n    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.\r\n    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.\r\n    - Policies are applied in the order of their appearance, from the top down.\r\n    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.\r\n-->\r\n<policies>\r\n  <inbound>\r\n    <base />\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "value": "<!--\r\n    Traffic routing is based on official sample:\r\n        https://github.com/Azure/api-management-policy-snippets/blob/master/examples/Random%20load%20balancer.policy.xml\r\n-->\r\n<policies>\r\n  <inbound>\r\n    <base />\r\n    <set-variable name=\"urlId\" value=\"@(new Random(context.RequestId.GetHashCode()).Next(1, 3))\" />\r\n    <choose>\r\n      <when condition=\"@(context.Variables.GetValueOrDefault&lt;int&gt;(&quot;urlId&quot;) == 1)\">\r\n        <!-- Use default host -->\r\n      </when>\r\n      <when condition=\"@(context.Variables.GetValueOrDefault&lt;int&gt;(&quot;urlId&quot;) == 2)\">\r\n        <set-backend-service base-url=\"https://microservices-with-apim-services-products.azurewebsites.net\" />\r\n      </when>\r\n      <otherwise>\r\n        <return-response>\r\n          <set-status code=\"500\" reason=\"InternalServerError\" />\r\n          <set-header name=\"Microsoft-Azure-Api-Management-Correlation-Id\" exists-action=\"override\">\r\n            <value>@{return Guid.NewGuid().ToString();}</value>\r\n          </set-header>\r\n          <set-body>A gateway-related error occurred while processing the request.</set-body>\r\n        </return-response>\r\n      </otherwise>\r\n    </choose>\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n    <choose>\r\n      <when condition=\"@(context.Variables.GetValueOrDefault&lt;int&gt;(&quot;urlId&quot;) == 1)\">\r\n        <set-header name=\"X-Runtime\" exists-action=\"override\">\r\n          <value>Legacy</value>\r\n        </set-header>\r\n      </when>\r\n      <when condition=\"@(context.Variables.GetValueOrDefault&lt;int&gt;(&quot;urlId&quot;) == 2)\">\r\n        <set-header name=\"X-Runtime\" exists-action=\"override\">\r\n          <value>Experiment (App Services with Containers)</value>\r\n        </set-header>\r\n      </when>\r\n      <otherwise />\r\n    </choose>\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "value": "<!--\r\n    IMPORTANT:\r\n    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.\r\n    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.\r\n    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.\r\n    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.\r\n    - To remove a policy, delete the corresponding policy statement from the policy document.\r\n    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.\r\n    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.\r\n    - Policies are applied in the order of their appearance, from the top down.\r\n    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.\r\n-->\r\n<policies>\r\n  <inbound>\r\n    <base />\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "value": "<!--\r\n    IMPORTANT:\r\n    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.\r\n    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.\r\n    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.\r\n    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.\r\n    - To remove a policy, delete the corresponding policy statement from the policy document.\r\n    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.\r\n    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.\r\n    - Policies are applied in the order of their appearance, from the top down.\r\n    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.\r\n-->\r\n<policies>\r\n  <inbound>\r\n    <base />\r\n  </inbound>\r\n  <backend>\r\n    <base />\r\n  </backend>\r\n  <outbound>\r\n    <base />\r\n  </outbound>\r\n  <on-error>\r\n    <base />\r\n  </on-error>\r\n</policies>",
+                "format": "xml"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/5cffaa39010108126ce233d6')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {}
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/5cffaa5e010108126ce233dc')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {}
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/5cffaa8e010108126ce233e2')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {}
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/schemas",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/5cffaaa5010108126ce233e8')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "contentType": "application/vnd.ms-azure-apim.swagger.definitions+json",
+                "document": {}
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/diagnostics",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/applicationinsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]",
+                "[resourceId('Microsoft.ApiManagement/service/loggers', parameters('ApiManagement.Name'), parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "alwaysLog": "allErrors",
+                "enableHttpCorrelationHeaders": true,
+                "loggerId": "[resourceId('Microsoft.ApiManagement/service/loggers', parameters('ApiManagement.Name'), parameters('ApiManagement.Name'))]",
+                "sampling": {
+                    "samplingType": "fixed",
+                    "percentage": 100
+                }
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/loggers",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/', parameters('ApiManagement.Name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]",
+                "[resourceId('microsoft.insights/components', parameters('ApplicationInsights.Name'))]"
+            ],
+            "properties": {
+                "loggerType": "applicationInsights",
+                "credentials": {
+                    "instrumentationKey": "{{Logger-ApplicationInsights}}"
+                },
+                "isBuffered": true,
+                "resourceId": "[resourceId('microsoft.insights/components', parameters('ApplicationInsights.Name'))]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform/codito-orders-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-customer-platform')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Orders API",
+                "apiRevision": "1",
+                "description": "Orders APIs of the Codito platform",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "orders",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform/codito-products-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-customer-platform')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Products API",
+                "apiRevision": "1",
+                "description": "Products APIs of the Codito platform",
+                "subscriptionRequired": true,
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "products",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform/codito-shipments-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-customer-platform')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Shipments API",
+                "apiRevision": "1",
+                "description": "Shipments APIs of the Codito platform",
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "shipments",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/apis",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-integration/codito-shipment-webhook-api')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-integration')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Codito - Shipment Webhook API",
+                "apiRevision": "1",
+                "description": "Shipment Webhook APIs of the Codito platform",
+                "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
+                "path": "shipments/webhooks",
+                "protocols": [
+                    "https"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/groups",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-integration/external-vendors')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-integration')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "External Vendors",
+                "type": "custom"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Health_Get/Health')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-orders-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Health"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Health_Get/Health')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-products-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Health"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Health_Get/Health')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipments-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Health"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Health_Get/Health')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Health"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Create/Orders')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-orders-api', 'Order_Create')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Orders"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Get/Orders')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-orders-api', 'Order_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Orders"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_Get/Products')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-products-api', 'Product_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Products"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_GetAll/Products')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-products-api', 'Product_GetAll')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Products"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Shipment_Get/Shipments')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipments-api', 'Shipment_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Shipments"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations/tags",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Shipment_UpdateStatus/Shipments')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api', 'Shipment_UpdateStatus')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
+            ],
+            "properties": {
+                "displayName": "Shipments"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/diagnostics/loggers",
+            "apiVersion": "2018-01-01",
+            "name": "[concat(parameters('ApiManagement.Name'), '/applicationinsights/', parameters('ApiManagement.Name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/diagnostics', parameters('ApiManagement.Name'), 'applicationinsights')]",
+                "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]",
+                "[resourceId('microsoft.insights/components', parameters('ApplicationInsights.Name'))]"
+            ],
+            "properties": {
+                "loggerType": "applicationInsights",
+                "credentials": {
+                    "instrumentationKey": "{{Logger-ApplicationInsights}}"
+                },
+                "isBuffered": true,
+                "resourceId": "[resourceId('microsoft.insights/components', parameters('ApplicationInsights.Name'))]"
+            }
+        }
+    ]
+}

@@ -1,0 +1,223 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "WebApp.Plan.Name": {
+            "type": "string"
+        },
+        "WebApp.Orders.Name": {
+            "type": "string"
+        },
+        "WebApp.Products.Name": {
+            "type": "string"
+        },
+        "WebApp.Shipments.Name": {
+            "type": "string"
+        },
+        "Kuberenetes.ClusterName": {
+            "type": "string"
+        },
+        "VirtualNetworks.Name": {
+            "type": "string"
+        },
+        "Kubernetes.ServicePrinciple.ClientId": {
+            "type": "string"
+        },
+        "Kubernetes.ServicePrinciple.Secret": {
+            "type": "securestring"
+        },
+        "Monitor.Workspace.Id": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ContainerService/managedClusters",
+            "apiVersion": "2018-03-31",
+            "name": "[parameters('Kuberenetes.ClusterName')]",
+            "location": "westeurope",
+            "properties": {
+                "kubernetesVersion": "1.12.8",
+                "dnsPrefix": "[concat(parameters('Kuberenetes.ClusterName'), '-dns')]",
+                "agentPoolProfiles": [
+                    {
+                        "name": "agentpool",
+                        "count": 1,
+                        "vmSize": "Standard_DS2_v2",
+                        "osDiskSizeGB": 100,
+                        "storageProfile": "ManagedDisks",
+                        "maxPods": 110,
+                        "osType": "Linux"
+                    }
+                ],
+                "servicePrincipalProfile": {
+                    "clientId": "[parameters('Kubernetes.ServicePrinciple.ClientId')]",
+                    "secret": "[parameters('Kubernetes.ServicePrinciple.Secret')]"
+                },
+                "addonProfiles": {
+                    "httpApplicationRouting": {
+                        "enabled": true,
+                        "config": {
+                            "HTTPApplicationRoutingZoneName": "abd3ca085a7f4d6b8d8b.westeurope.aksapp.io"
+                        }
+                    },
+                    "omsagent": {
+                        "enabled": true,
+                        "config": {
+                            "logAnalyticsWorkspaceResourceID": "[parameters('Monitor.Workspace.Id')]"
+                        }
+                    }
+                },
+                "enableRBAC": false,
+                "networkProfile": {
+                    "networkPlugin": "kubenet",
+                    "podCidr": "10.244.0.0/16",
+                    "serviceCidr": "10.0.0.0/16",
+                    "dnsServiceIP": "10.0.0.10",
+                    "dockerBridgeCidr": "172.17.0.1/16"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('VirtualNetworks.Name')]",
+            "location": "westeurope",
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "05980a30-75c9-4cfb-8b98-485b8fdeb019",
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/8"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "etag": "W/\"ba7bad15-162b-4af1-afa8-fbd21917debe\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "10.240.0.0/16",
+                            "delegations": []
+                        }
+                    },
+                    {
+                        "name": "virtual-node-aci",
+                        "etag": "W/\"ba7bad15-162b-4af1-afa8-fbd21917debe\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "10.241.0.0/16",
+                            "delegations": [
+                                {
+                                    "name": "aciDelegation",
+                                    "etag": "W/\"ba7bad15-162b-4af1-afa8-fbd21917debe\"",
+                                    "properties": {
+                                        "serviceName": "Microsoft.ContainerInstance/containerGroups",
+                                        "actions": [
+                                            "Microsoft.Network/virtualNetworks/subnets/action"
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            "name": "[parameters('WebApp.Plan.Name')]",
+            "location": "West Europe",
+            "sku": {
+                "name": "S1",
+                "capacity": 1
+            },
+            "kind": "linux",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2019-04-01",
+            "name": "[concat(parameters('VirtualNetworks.Name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VirtualNetworks.Name'))]"
+            ],
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.240.0.0/16",
+                "delegations": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2019-04-01",
+            "name": "[concat(parameters('VirtualNetworks.Name'), '/virtual-node-aci')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VirtualNetworks.Name'))]"
+            ],
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.241.0.0/16",
+                "delegations": [
+                    {
+                        "name": "aciDelegation",
+                        "etag": "W/\"ba7bad15-162b-4af1-afa8-fbd21917debe\"",
+                        "properties": {
+                            "serviceName": "Microsoft.ContainerInstance/containerGroups",
+                            "actions": [
+                                "Microsoft.Network/virtualNetworks/subnets/action"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('WebApp.Orders.Name')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('WebApp.Plan.Name'))]"
+            ],
+            "kind": "app,linux,container",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('WebApp.Plan.Name'))]",
+                "linuxFxVersion": "DOCKER|coditeu/microservices-with-api-management-services-order:latest"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('WebApp.Products.Name')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('WebApp.Plan.Name'))]"
+            ],
+            "kind": "app,linux,container",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('WebApp.Plan.Name'))]",
+                "linuxFxVersion": "DOCKER|coditeu/microservices-with-api-management-services-product:latest"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('WebApp.Shipments.Name')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('WebApp.Plan.Name'))]"
+            ],
+            "kind": "app,linux,container",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('WebApp.Plan.Name'))]",
+                "linuxFxVersion": "DOCKER|coditeu/microservices-with-api-management-services-shipment:latest"
+            }
+        }
+    ]
+}
