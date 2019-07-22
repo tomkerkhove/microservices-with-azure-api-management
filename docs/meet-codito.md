@@ -42,3 +42,7 @@ Microservices are a journey:
 Use as much PaaS as you can, until you need more control:
 - Azure App Services & Azure Integration Services are a good starting point.
 - Easily port your same application to Azure Kubernetes Service, if you need more control.
+
+Want to learn how?
+- [Migrating to Azure Web App for Containers](./migrating-to-web-app-for-containers.md)
+- [Migrating to Azure Kubernetes Service](./migrating-to-kubernetes.md)
