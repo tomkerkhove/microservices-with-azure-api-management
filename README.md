@@ -9,3 +9,5 @@ Learn about their journey where they decompose a monolith into multiple smaller 
 - [Codito Tomorrow](./docs/codito-tomorrow.md)
 
 Curious? [Run it yourself](/deploy) and give it a try!
+
+![Codito](.//media/codito.jpg)
