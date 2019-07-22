@@ -6,7 +6,7 @@ This allows your consumers to communicate with a local gateway which is managed 
 
 ![Azure API Management Gateway](./../media/api-management-gateway.png)
 
-This is good new for Codito because they can now not only decouple external customers from their application, it brings the same benefits for internal customers.
+This is good news for Codito because they can now not only decouple external customers from their application, it brings the same benefits for internal customers.
 
 When they've migrated to Kubernetes, the Order service was communicating to the Shipment service directly.
 

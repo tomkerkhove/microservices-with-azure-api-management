@@ -6,8 +6,8 @@ Their customers can fully automate:
 - Ordering products to be delivered at home
 - Getting information about a shipment
 
-In order to deliver all orders they have partnered with multiple 3rd parties to deliver shipments.
-These 3rd party service providers are in charge providing updates about package deliveries.
+To deliver all orders, they have partnered with multiple 3rd parties to deliver shipments.
+These 3rd party service providers are in charge of providing updates about package deliveries.
 
 This is handled by pushing status updates to a Codito webhook endpoint.
 
@@ -15,7 +15,7 @@ This is handled by pushing status updates to a Codito webhook endpoint.
 
 ## Where are they today?
 
-As of today, Codito is exposing their services via Azure API Management which gives them all the rich API ecosystem features they need ranging from service decoupling, developer portal and user management.
+As of today, Codito is exposing their services via Azure API Management which gives them all the rich API ecosystem features they need ranging from service decoupling, developer portal, and user management.
 
 Their monolith is hosted in an Azure Web App which is all written in .NET Core.
 
@@ -23,13 +23,13 @@ Their monolith is hosted in an Azure Web App which is all written in .NET Core.
 
 ## Transition to microservices
 Codito wants to transition to microservices:
-- Provide capability to easily ship new features
+- Provide the capability to easily ship new features
 - Allow services to run on specialized compute
 - Increase service ownership
 
 But, we need to ensure that
 - Customer experience does not change
-- Developers have the capability to experiment with new approaches with A/B testing
+- Developers can experiment with new approaches with A/B testing
 - Customers have one central gateway for all microservices
 
 ## How do we get there?
