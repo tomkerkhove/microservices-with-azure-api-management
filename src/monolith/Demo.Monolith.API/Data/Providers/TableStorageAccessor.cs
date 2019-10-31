@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Demo.Monolith.API.Data.Contracts.v1;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
 

@@ -19,6 +19,7 @@ namespace Demo.Monolith.API.Extensions
             app.UseSwagger();
             app.UseSwaggerUI(swaggerUiOptions =>
             {
+                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Monolith}/swagger.json", "Codito - Monolith API");
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Orders}/swagger.json", "Codito - Orders API");
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Products}/swagger.json", "Codito - Products API");
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Shipments}/swagger.json", "Codito - Shipments API");

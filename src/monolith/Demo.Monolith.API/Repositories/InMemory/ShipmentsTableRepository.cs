@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Demo.Monolith.API.Contracts.v1;
 using Demo.Monolith.API.Data.Contracts.v1;
 using Demo.Monolith.API.Data.Providers;
-using Demo.Monolith.API.Exceptions;
 using Demo.Monolith.API.Repositories.Interfaces;
 using Newtonsoft.Json;
 
