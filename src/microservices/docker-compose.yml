@@ -19,5 +19,11 @@ services:
       context: .
       dockerfile: Demo.Microservices.Shipments.API/Dockerfile
 
+  demo.microservices.api.docs:
+    image: tomkerkhove/demo.microservices.api.docs
+    build:
+      context: ./../../deploy/api-management/dev-portal/
+      dockerfile: Dockerfile
+
   demo.microservices.gateway:
     image: mcr.microsoft.com/azure-api-management/gateway:0.1.0
