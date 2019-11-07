@@ -22,3 +22,9 @@ services:
       - AZURESTORAGE_CONNECTIONSTRING=
     ports:
       - "80"
+
+  demo.microservices.gateway:
+    env_file:
+      - api-gateway.conf
+    ports:
+      - "888:8080"
