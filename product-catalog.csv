@@ -1,0 +1,4 @@
+Id,Name,PartitionKey,Price,RowKey,Timestamp
+3,Xbox Game Pass for PC,products,3.99,0235ca70-4cf9-4de1-bdd3-771fbe3191d8,2019-10-31T14:32:03.528Z
+2,Forza Horizon 4,products,49.99,1426f92e-050c-42ca-8d22-f941665b7ad1,2019-10-31T14:31:19.000Z
+1,Xbox One X,products,499.99,6e45ec36-d1a1-4ed2-aac8-9759e284c68a,2019-10-31T14:30:18.723Z

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Demo.Monolith.API.Contracts.v1;
 
 namespace Demo.Monolith.API.Repositories.Interfaces
