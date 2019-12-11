@@ -23,6 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Microservices.Shipment
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Microservices.Shipments.Contracts", "Demo.Microservices.Shipments.Contracts\Demo.Microservices.Shipments.Contracts.csproj", "{47BE11F5-67E5-4BA2-BB3C-EFC127767A1D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{04FAE427-5BFA-4562-AB9D-9E56FD5E3DCD}"
+	ProjectSection(SolutionItems) = preProject
+		api-gateway.conf = api-gateway.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
