@@ -6,12 +6,13 @@
     <inbound>
         <base />
         <set-variable name="urlId" value="@(new Random(context.RequestId.GetHashCode()).Next(1, 3))" />
+        <set-variable name="upstreamUrl" value="@(context.Api.ServiceUrl.ToString())" />
         <choose>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 1)">
                 <!-- Use default host -->
             </when>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 2)">
-                <set-backend-service base-url="https://microservices-with-apim-services-products.azurewebsites.net" />
+                <set-variable name="upstreamUrl" value="https://codito-microservices-products.azurewebsites.net" />
             </when>
             <otherwise>
                 <return-response>
@@ -23,6 +24,7 @@
                 </return-response>
             </otherwise>
         </choose>
+        <set-backend-service base-url="@(context.Variables.GetValueOrDefault<string>("upstreamUrl"))" />
     </inbound>
     <backend>
         <base />
@@ -42,6 +44,15 @@
             </when>
             <otherwise />
         </choose>
+        <set-header name="X-Upstream-Url" exists-action="override">
+            <value>@(context.Variables.GetValueOrDefault<string>("upstreamUrl"))</value>
+        </set-header>
+        <set-header name="X-Gateway-Region" exists-action="override">
+            <value>@(context.Deployment.Region)</value>
+        </set-header>
+        <set-header name="X-Gateway-ServiceName" exists-action="override">
+            <value>@(context.Deployment.ServiceName)</value>
+        </set-header>
     </outbound>
     <on-error>
         <base />
