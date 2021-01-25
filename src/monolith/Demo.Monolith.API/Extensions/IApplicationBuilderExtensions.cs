@@ -25,6 +25,7 @@ namespace Demo.Monolith.API.Extensions
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Shipments}/swagger.json", "Codito - Shipments API");
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.ShipmentWebhook}/swagger.json", "Codito - Shipment Webhook API");
 
+                swaggerUiOptions.RoutePrefix = "api/docs";
                 swaggerUiOptions.DisplayOperationId();
                 swaggerUiOptions.EnableDeepLinking();
                 swaggerUiOptions.DocExpansion(DocExpansion.List);
