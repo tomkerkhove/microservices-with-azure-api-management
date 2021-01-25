@@ -2,7 +2,7 @@ name: CI (Runtime)
 on:
   pull_request:
     paths:
-    - '.github/ci-images.yml'
+    - '.github/workflows/ci-images.yml'
     - 'src/**'
 
 env:

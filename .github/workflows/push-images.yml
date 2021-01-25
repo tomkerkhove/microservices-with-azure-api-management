@@ -2,7 +2,7 @@ name: Push Docker Images to GitHub Container Registry
 on:
   push:
     paths:
-    - '.github/ci-images.yml'
+    - '.github/workflows/ci-images.yml'
     - 'src/**'
     branches:
     - master
