@@ -1,16 +1,12 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Demo.Microservices.Shipments.Contracts.v1;
 using Demo.Microservices.Shipments.Data.Exceptions;
-using Demo.Microservices.Shipments.Data.Providers;
-using Demo.Microservices.Shipments.Data.Repositories.InMemory;
 using Demo.Microservices.Shipments.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 

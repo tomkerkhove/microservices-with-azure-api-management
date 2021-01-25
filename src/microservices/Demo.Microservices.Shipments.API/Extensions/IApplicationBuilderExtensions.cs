@@ -22,6 +22,7 @@ namespace Demo.Microservices.Shipments.API.Extensions
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Shipments}/swagger.json", "Codito - Shipments API");
                 swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.ShipmentManagement}/swagger.json", "Codito - Shipment Management API");
 
+                swaggerUiOptions.RoutePrefix = "api/docs";
                 swaggerUiOptions.DisplayOperationId();
                 swaggerUiOptions.EnableDeepLinking();
                 swaggerUiOptions.DocExpansion(DocExpansion.List);
