@@ -18,7 +18,9 @@ namespace Demo.Microservices.Products.API.Extensions
             app.UseSwagger();
             app.UseSwaggerUI(swaggerUiOptions =>
             {
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/v1/swagger.json", "Codito - Products API");
+                swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Codito - Products API");
+
+                swaggerUiOptions.RoutePrefix = "api/docs";
                 swaggerUiOptions.DisplayOperationId();
                 swaggerUiOptions.EnableDeepLinking();
                 swaggerUiOptions.DocExpansion(DocExpansion.List);

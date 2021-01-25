@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Demo.Microservices.Shipments.API.OpenAPI;
 using Demo.Microservices.Shipments.Contracts.v1;
-using Demo.Microservices.Shipments.Data.Exceptions;
 using Demo.Microservices.Shipments.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
