@@ -2,7 +2,7 @@ name: Push Docker Images to GitHub Container Registry
 on:
   push:
     paths:
-    - '.github/ci-images.yml'
+    - '.github/workflows/ci-images.yml'
     - 'src/**'
     branches:
     - master
@@ -10,7 +10,7 @@ env:
   IMAGE_TAG: latest
 jobs:
   monolith:
-    name: Push Order Microservice to GHCR
+    name: Push Monolith to GHCR
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-monolith
@@ -23,7 +23,7 @@ jobs:
         username: coditeu
         password: ${{ secrets.CONTAINER_REGISTRY_KEY }}
     - name: Build the Docker image
-      run: docker build ./src/monolith/Demo.Monolith.API/ --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+      run: docker build ./src/monolith/ --file ./src/monolith/Demo.Monolith.API/Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
     - name: Push the Docker image
       run: docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
   microservices_orders:
