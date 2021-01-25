@@ -27,8 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Demo.Microservices.Shipments.Contracts\Demo.Microservices.Shipments.Contracts.csproj" />
-    <ProjectReference Include="..\..\Demo.Microservices.Shipments.Data\Demo.Microservices.Shipments.Data.csproj" />
     <ProjectReference Include="..\Demo.Microservices.Shipments.Contracts\Demo.Microservices.Shipments.Contracts.csproj" />
     <ProjectReference Include="..\Demo.Microservices.Shipments.Data\Demo.Microservices.Shipments.Data.csproj" />
   </ItemGroup>

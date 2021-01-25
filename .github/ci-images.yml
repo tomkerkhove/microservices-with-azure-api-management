@@ -1,0 +1,53 @@
+name: CI (Runtime)
+on:
+  pull_request:
+    paths:
+    - '.github/ci-images.yml'
+    - 'src/**'
+
+env:
+  IMAGE_NAME: ghcr.io/tomkerkhove/k8s-event-grid-bridge
+  IMAGE_TAG: experimental
+  
+jobs:
+  solution_microservices:
+    name: Solution (Microservices)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Solution
+      run: dotnet build ./src/microservices/Demo.Microservices.sln
+  solution_monolith:
+    name: Solution (Monolith)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Solution
+      run: dotnet build ./src/monolith/Demo.sln
+  microservices_orders:
+    name: Build Order Microservice (Docker)
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-order
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ./src/microservices --file ./src/microservices/Demo.Microservices.Orders.API/Dockerfile
+  microservices_shipments:
+    name: Build Shipments Microservice (Docker)
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-shipment
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ./src/microservices --file ./src/microservices/Demo.Microservices.Shipments.API/Dockerfile
+  microservices_products:
+    name: Build Products Microservice (Docker)
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-product
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ./src/microservices --file ./src/microservices/Demo.Microservices.Products.API/Dockerfile
