@@ -24,6 +24,15 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build Solution
       run: dotnet build ./src/monolith/Demo.sln
+  monolith:
+    name: Build Monolith (Docker)
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-monolith
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ./src/monolith/ --file ./src/monolith/Demo.Monolith.API/Dockerfile
   microservices_orders:
     name: Build Order Microservice (Docker)
     runs-on: ubuntu-latest
