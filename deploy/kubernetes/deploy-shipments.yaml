@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: shipments-api
-        image: coditeu/microservices-with-api-management-services-shipment
+        image: ghcr.io/coditeu/microservices-with-api-management-services-shipment:latest
         ports:
         - containerPort: 80
         env:
@@ -61,6 +61,8 @@ metadata:
   labels:
     app: codito
     microservice: shipments
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: codito-kubernetes-shipments
 spec:
   ports:
   - port: 88

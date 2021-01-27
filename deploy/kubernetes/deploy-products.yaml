@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: products-api
-        image: coditeu/microservices-with-api-management-services-product
+        image: ghcr.io/coditeu/microservices-with-api-management-services-product:latest
         ports:
         - containerPort: 80
         env:
@@ -43,6 +43,8 @@ metadata:
   labels:
     app: codito
     microservice: products
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: codito-kubernetes-products
 spec:
   type: LoadBalancer
   ports:
