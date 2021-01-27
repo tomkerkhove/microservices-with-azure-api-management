@@ -43,6 +43,8 @@ metadata:
   labels:
     app: codito
     microservice: shipments
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: codito-kubernetes-shipments
 spec:
   type: LoadBalancer
   ports:
@@ -61,8 +63,6 @@ metadata:
   labels:
     app: codito
     microservice: shipments
-  annotations:
-    service.beta.kubernetes.io/azure-dns-label-name: codito-kubernetes-shipments
 spec:
   ports:
   - port: 88
