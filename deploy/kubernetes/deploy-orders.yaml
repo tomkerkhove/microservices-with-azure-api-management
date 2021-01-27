@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: orders-api
-        image: coditeu/microservices-with-api-management-services-order
+        image: ghcr.io/coditeu/microservices-with-api-management-services-order:latest
         ports:
         - containerPort: 80
         env:
@@ -28,7 +28,7 @@ spec:
              name: orders-secrets
              key: AZURESTORAGE_CONNECTIONSTRING
         - name: SHIPMENTS_API_URI
-          value: http://codito-microservices-shipments-internal-service.webinar-sandbox:88/api/v1/shipments
+          value: http://codito-microservices-shipments-loadbalancer-service:88/api/v1/shipments
         livenessProbe:
             httpGet:
               path: /api/v1/health
@@ -45,6 +45,8 @@ metadata:
   labels:
     app: codito
     microservice: orders
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: codito-kubernetes-orders
 spec:
   type: LoadBalancer
   ports:
