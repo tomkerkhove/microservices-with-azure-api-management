@@ -11,7 +11,7 @@ These 3rd party service providers are in charge of providing updates about packa
 
 This is handled by pushing status updates to a Contoso webhook endpoint.
 
-![Contoso](./../media/codito.jpg)
+![Contoso](./../media/contoso.jpg)
 
 ## Where are they today?
 
@@ -19,7 +19,7 @@ As of today, Contoso is exposing their services via Azure API Management which g
 
 Their monolith is hosted in an Azure Web App which is all written in .NET Core.
 
-![Contoso today](./../media/codito-today.png)
+![Contoso today](./../media/contoso-today.png)
 
 ## Transition to microservices
 Contoso wants to transition to microservices:

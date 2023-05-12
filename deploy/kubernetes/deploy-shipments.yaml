@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: codito-microservices-shipments
+  name: contoso-microservices-shipments
   labels:
-    app: codito
+    app: contoso
     microservice: shipments
 spec:
   selector:
     matchLabels:
-      app: codito
+      app: contoso
       microservice: shipments
   template:
     metadata:
       labels:
-        app: codito
+        app: contoso
         microservice: shipments
     spec:
       containers:
@@ -39,12 +39,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: codito-microservices-shipments-loadbalancer-service
+  name: contoso-microservices-shipments-loadbalancer-service
   labels:
-    app: codito
+    app: contoso
     microservice: shipments
   annotations:
-    service.beta.kubernetes.io/azure-dns-label-name: codito-kubernetes-shipments
+    service.beta.kubernetes.io/azure-dns-label-name: contoso-kubernetes-shipments
 spec:
   type: LoadBalancer
   ports:
@@ -53,15 +53,15 @@ spec:
       targetPort: 80
       protocol: TCP
   selector:
-    app: codito
+    app: contoso
     microservice: shipments
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: codito-microservices-shipments-internal-service
+  name: contoso-microservices-shipments-internal-service
   labels:
-    app: codito
+    app: contoso
     microservice: shipments
 spec:
   ports:
@@ -69,7 +69,7 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: codito
+    app: contoso
     microservice: shipments
 ---
 apiVersion: v1
@@ -77,7 +77,7 @@ kind: Secret
 metadata:
   name: shipments-secrets
   labels:
-    app: codito
+    app: contoso
     microservice: shipments
 data:
   AZURESTORAGE_CONNECTIONSTRING: <base64 encoded connection string>

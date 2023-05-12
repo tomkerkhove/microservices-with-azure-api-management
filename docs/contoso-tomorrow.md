@@ -12,8 +12,8 @@ When they've migrated to Kubernetes, the Order service was communicating to the 
 
 This means that the Shipment service has no control over how it's called, enforce throttling or route traffic to a new version for A/B testing.
 
-![Contoso migration to Azure Web App for Containers](./../media/codito-phase-II-internals.png)
+![Contoso migration to Azure Web App for Containers](./../media/contoso-phase-II-internals.png)
 
 With Azure API Management Gateway, however, they can deploy the gateway inside the cluster and expose the Shipment service to their internal customers with the same API Gateway experience:
 
-![Contoso using Azure API Management Gateway inside the cluster](./../media/codito-future.png)
+![Contoso using Azure API Management Gateway inside the cluster](./../media/contoso-future.png)

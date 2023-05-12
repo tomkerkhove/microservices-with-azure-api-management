@@ -10,12 +10,12 @@ Contoso has decided to change their internal design and migrate to Kubernetes. I
 
 Given Pods are locked down by default, the Shipment service will also provide an internal "Service" so that the Order service can still communicate with them.
 
-![Contoso migration to Azure Web App for Containers](./../media/codito-phase-II-internals.png)
+![Contoso migration to Azure Web App for Containers](./../media/contoso-phase-II-internals.png)
 
 In order to achieve this they will use the same A/B testing to guarantee that everything still works.
 
-![Contoso migration to Azure Web App for Containers](./../media/codito-phase-II.png)
+![Contoso migration to Azure Web App for Containers](./../media/contoso-phase-II.png)
 
 ## Further Reading
 
-Interested in how Contoso can decouple internal services in the future? Read about it [here](./codito-tomorrow.md).
+Interested in how Contoso can decouple internal services in the future? Read about it [here](./contoso-tomorrow.md).

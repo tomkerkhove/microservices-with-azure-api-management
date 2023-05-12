@@ -6,7 +6,7 @@ With their migration into multiple microservices, they want to transition to con
 
 However, they still want to benefit from the PaaS capabilities that Azure App Services provide so they have chosen to use Azure Web Apps for Containers!
 
-![Contoso migration to Azure Web App for Containers](./../media/codito-phase-I.png)
+![Contoso migration to Azure Web App for Containers](./../media/contoso-phase-I.png)
 
 ## Migrating to Azure Web Apps for Containers
 Azure Web Apps for Containers allows them to package their microservices as containers and deploy the containers on top of Azure App Services. During this migration Contoso change from packaging their app from a ZIP file to a Linux Docker container image.
