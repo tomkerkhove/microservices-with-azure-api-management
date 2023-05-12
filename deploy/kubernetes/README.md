@@ -1,3 +1,3 @@
 # Kubernetes deployment
 
-Deployment specification for running Codito's application on Kubernetes.
+Deployment specification for running Contoso's application on Kubernetes.

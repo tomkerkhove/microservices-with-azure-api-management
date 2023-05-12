@@ -1,5 +1,5 @@
-# Meet Codito
-Codito provides industry-leading APIs for purchasing Microsoft Products.
+# Meet Contoso
+Contoso provides industry-leading APIs for purchasing Microsoft Products.
 
 Their customers can fully automate:
 - Listing the product catalog
@@ -9,20 +9,20 @@ Their customers can fully automate:
 To deliver all orders, they have partnered with multiple 3rd parties to deliver shipments.
 These 3rd party service providers are in charge of providing updates about package deliveries.
 
-This is handled by pushing status updates to a Codito webhook endpoint.
+This is handled by pushing status updates to a Contoso webhook endpoint.
 
-![Codito](./../media/codito.jpg)
+![Contoso](./../media/contoso.jpg)
 
 ## Where are they today?
 
-As of today, Codito is exposing their services via Azure API Management which gives them all the rich API ecosystem features they need ranging from service decoupling, developer portal, and user management.
+As of today, Contoso is exposing their services via Azure API Management which gives them all the rich API ecosystem features they need ranging from service decoupling, developer portal, and user management.
 
 Their monolith is hosted in an Azure Web App which is all written in .NET Core.
 
-![Codito today](./../media/codito-today.png)
+![Contoso today](./../media/contoso-today.png)
 
 ## Transition to microservices
-Codito wants to transition to microservices:
+Contoso wants to transition to microservices:
 - Provide the capability to easily ship new features
 - Allow services to run on specialized compute
 - Increase service ownership

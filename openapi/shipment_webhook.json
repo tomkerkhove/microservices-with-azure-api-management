@@ -2,10 +2,10 @@
     "swagger": "2.0",
     "info": {
         "version": "v1",
-        "title": "Codito - Shipment Webhook API",
-        "description": "Shipment Webhook APIs of the Codito platform",
+        "title": "Contoso - Shipment Webhook API",
+        "description": "Shipment Webhook APIs of the Contoso platform",
         "contact": {
-            "name": "Codit",
+            "name": "Contoso",
             "url": "https://codit.eu"
         }
     },

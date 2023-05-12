@@ -19,11 +19,11 @@ namespace Demo.Monolith.API.Extensions
             app.UseSwagger();
             app.UseSwaggerUI(swaggerUiOptions =>
             {
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Monolith}/swagger.json", "Codito - Monolith API");
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Orders}/swagger.json", "Codito - Orders API");
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Products}/swagger.json", "Codito - Products API");
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Shipments}/swagger.json", "Codito - Shipments API");
-                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.ShipmentWebhook}/swagger.json", "Codito - Shipment Webhook API");
+                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Monolith}/swagger.json", "Contoso - Monolith API");
+                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Orders}/swagger.json", "Contoso - Orders API");
+                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Products}/swagger.json", "Contoso - Products API");
+                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.Shipments}/swagger.json", "Contoso - Shipments API");
+                swaggerUiOptions.SwaggerEndpoint($"/swagger/{OpenApiCategories.ShipmentWebhook}/swagger.json", "Contoso - Shipment Webhook API");
 
                 swaggerUiOptions.RoutePrefix = "api/docs";
                 swaggerUiOptions.DisplayOperationId();

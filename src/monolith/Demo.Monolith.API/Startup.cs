@@ -25,11 +25,11 @@ namespace Demo.Monolith.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options =>
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.Formatting = Formatting.Indented;
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+
                 });
 
             services.AddScoped<IShipmentRepository, ShipmentsTableRepository>();
@@ -54,9 +54,9 @@ namespace Demo.Monolith.API
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
-            app.UseOpenApiUi();
+            app.UseRouting()
+               .UseEndpoints(o => o.MapControllers())
+               .UseOpenApiUi();
         }
     }
 }

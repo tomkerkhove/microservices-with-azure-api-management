@@ -18,7 +18,7 @@ namespace Demo.Microservices.Orders.API.Extensions
             app.UseSwagger();
             app.UseSwaggerUI(swaggerUiOptions =>
             {
-                swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Codito - Orders API");
+                swaggerUiOptions.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso - Orders API");
 
                 swaggerUiOptions.RoutePrefix = "api/docs";
                 swaggerUiOptions.DisplayOperationId();

@@ -15,11 +15,11 @@ namespace Demo.Microservices.Orders.API.Extensions
             {
                 Contact = new Contact
                 {
-                    Name = "Codit",
+                    Name = "Contoso",
                     Url = "https://codit.eu"
                 },
-                Title = $"Codito - Orders API",
-                Description = $"Orders APIs of the Codito platform",
+                Title = $"Contoso - Orders API",
+                Description = $"Orders APIs of the Contoso platform",
                 Version = "v1"
             };
 
@@ -43,11 +43,11 @@ namespace Demo.Microservices.Orders.API.Extensions
             {
                 Contact = new Contact
                 {
-                    Name = "Codit",
+                    Name = "Contoso",
                     Url = "https://codit.eu"
                 },
-                Title = $"Codito - {microserviceName} API",
-                Description = $"{microserviceName} APIs of the Codito platform",
+                Title = $"Contoso - {microserviceName} API",
+                Description = $"{microserviceName} APIs of the Contoso platform",
                 Version = "v1"
             };
             return openApiInformation;

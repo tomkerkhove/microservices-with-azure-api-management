@@ -37,7 +37,7 @@
             },
             "properties": {
                 "publisherEmail": "tom.kerkhove@codit.eu",
-                "publisherName": "Codito"
+                "publisherName": "Contoso"
             }
         },
         {
@@ -94,14 +94,14 @@
         {
             "type": "Microsoft.ApiManagement/service/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Orders API",
+                "displayName": "Contoso - Orders API",
                 "apiRevision": "1",
-                "description": "Orders APIs of the Codito platform",
+                "description": "Orders APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "orders",
@@ -113,14 +113,14 @@
         {
             "type": "Microsoft.ApiManagement/service/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Products API",
+                "displayName": "Contoso - Products API",
                 "apiRevision": "1",
-                "description": "Products APIs of the Codito platform",
+                "description": "Products APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "products",
@@ -132,14 +132,14 @@
         {
             "type": "Microsoft.ApiManagement/service/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipments API",
+                "displayName": "Contoso - Shipments API",
                 "apiRevision": "1",
-                "description": "Shipments APIs of the Codito platform",
+                "description": "Shipments APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments",
                 "protocols": [
@@ -150,14 +150,14 @@
         {
             "type": "Microsoft.ApiManagement/service/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipment Webhook API",
+                "displayName": "Contoso - Shipment Webhook API",
                 "apiRevision": "1",
-                "description": "Shipment Webhook APIs of the Codito platform",
+                "description": "Shipment Webhook APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments/webhooks",
                 "protocols": [
@@ -180,13 +180,13 @@
         {
             "type": "Microsoft.ApiManagement/service/products",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-customer-platform')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito Customer Platform",
-                "description": "All APIs in the Codito customer platform offering",
+                "displayName": "Contoso Customer Platform",
+                "description": "All APIs in the Contoso customer platform offering",
                 "subscriptionRequired": true,
                 "approvalRequired": false,
                 "state": "published"
@@ -195,13 +195,13 @@
         {
             "type": "Microsoft.ApiManagement/service/products",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-integration')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-integration')]",
             "dependsOn": [
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito Integration",
-                "description": "All APIs to integrate with the Codito platform",
+                "displayName": "Contoso Integration",
+                "description": "All APIs to integrate with the Contoso platform",
                 "subscriptionRequired": true,
                 "approvalRequired": false,
                 "state": "published"
@@ -292,9 +292,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Health_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/Health_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -322,9 +322,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Health_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/Health_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -352,9 +352,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Health_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api/Health_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipments-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -382,9 +382,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Health_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api/Health_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -412,9 +412,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Create')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/Order_Create')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -494,9 +494,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/Order_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -589,9 +589,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/Product_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -685,9 +685,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_GetAll')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/Product_GetAll')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -741,9 +741,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Shipment_Get')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api/Shipment_Get')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipments-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -836,9 +836,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Shipment_UpdateStatus')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api/Shipment_UpdateStatus')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -904,9 +904,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/policies",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/policy')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/policy')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -917,9 +917,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/policies",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/policy')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/policy')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -930,9 +930,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/policies",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/policy')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api/policy')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipments-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -943,9 +943,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/policies",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/policy')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api/policy')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -956,9 +956,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/schemas",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/5cffaa39010108126ce233d6')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/5cffaa39010108126ce233d6')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -969,9 +969,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/schemas",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/5cffaa5e010108126ce233dc')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/5cffaa5e010108126ce233dc')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -982,9 +982,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/schemas",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/5cffaa8e010108126ce233e2')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api/5cffaa8e010108126ce233e2')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipments-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -995,9 +995,9 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/schemas",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/5cffaaa5010108126ce233e8')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api/5cffaaa5010108126ce233e8')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1043,15 +1043,15 @@
         {
             "type": "Microsoft.ApiManagement/service/products/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform/codito-orders-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-customer-platform/contoso-orders-api')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-customer-platform')]",
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'contoso-customer-platform')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Orders API",
+                "displayName": "Contoso - Orders API",
                 "apiRevision": "1",
-                "description": "Orders APIs of the Codito platform",
+                "description": "Orders APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "orders",
@@ -1063,15 +1063,15 @@
         {
             "type": "Microsoft.ApiManagement/service/products/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform/codito-products-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-customer-platform/contoso-products-api')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-customer-platform')]",
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'contoso-customer-platform')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Products API",
+                "displayName": "Contoso - Products API",
                 "apiRevision": "1",
-                "description": "Products APIs of the Codito platform",
+                "description": "Products APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "products",
@@ -1083,15 +1083,15 @@
         {
             "type": "Microsoft.ApiManagement/service/products/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-customer-platform/codito-shipments-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-customer-platform/contoso-shipments-api')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-customer-platform')]",
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'contoso-customer-platform')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipments API",
+                "displayName": "Contoso - Shipments API",
                 "apiRevision": "1",
-                "description": "Shipments APIs of the Codito platform",
+                "description": "Shipments APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments",
                 "protocols": [
@@ -1102,15 +1102,15 @@
         {
             "type": "Microsoft.ApiManagement/service/products/apis",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-integration/codito-shipment-webhook-api')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-integration/contoso-shipment-webhook-api')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-integration')]",
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'contoso-integration')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipment Webhook API",
+                "displayName": "Contoso - Shipment Webhook API",
                 "apiRevision": "1",
-                "description": "Shipment Webhook APIs of the Codito platform",
+                "description": "Shipment Webhook APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments/webhooks",
                 "protocols": [
@@ -1121,9 +1121,9 @@
         {
             "type": "Microsoft.ApiManagement/service/products/groups",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-integration/external-vendors')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-integration/external-vendors')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'codito-integration')]",
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('ApiManagement.Name'), 'contoso-integration')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1134,10 +1134,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Health_Get/Health')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/Health_Get/Health')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-orders-api', 'Health_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-orders-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1147,10 +1147,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Health_Get/Health')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/Health_Get/Health')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-products-api', 'Health_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-products-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1160,10 +1160,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Health_Get/Health')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api/Health_Get/Health')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipments-api', 'Health_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-shipments-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipments-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1173,10 +1173,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Health_Get/Health')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api/Health_Get/Health')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api', 'Health_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api', 'Health_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1186,10 +1186,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Create/Orders')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/Order_Create/Orders')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-orders-api', 'Order_Create')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-orders-api', 'Order_Create')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1199,10 +1199,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-orders-api/Order_Get/Orders')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-orders-api/Order_Get/Orders')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-orders-api', 'Order_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-orders-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-orders-api', 'Order_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-orders-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1212,10 +1212,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_Get/Products')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/Product_Get/Products')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-products-api', 'Product_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-products-api', 'Product_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1225,10 +1225,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-products-api/Product_GetAll/Products')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-products-api/Product_GetAll/Products')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-products-api', 'Product_GetAll')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-products-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-products-api', 'Product_GetAll')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-products-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1238,10 +1238,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipments-api/Shipment_Get/Shipments')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipments-api/Shipment_Get/Shipments')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipments-api', 'Shipment_Get')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipments-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-shipments-api', 'Shipment_Get')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipments-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
@@ -1251,10 +1251,10 @@
         {
             "type": "Microsoft.ApiManagement/service/apis/operations/tags",
             "apiVersion": "2019-01-01",
-            "name": "[concat(parameters('ApiManagement.Name'), '/codito-shipment-webhook-api/Shipment_UpdateStatus/Shipments')]",
+            "name": "[concat(parameters('ApiManagement.Name'), '/contoso-shipment-webhook-api/Shipment_UpdateStatus/Shipments')]",
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api', 'Shipment_UpdateStatus')]",
-                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'codito-shipment-webhook-api')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis/operations', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api', 'Shipment_UpdateStatus')]",
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('ApiManagement.Name'), 'contoso-shipment-webhook-api')]",
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {

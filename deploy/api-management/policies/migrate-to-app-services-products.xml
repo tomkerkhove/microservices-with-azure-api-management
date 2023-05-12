@@ -12,7 +12,7 @@
                 <!-- Use default host -->
             </when>
             <when condition="@(context.Variables.GetValueOrDefault<int>("urlId") == 2)">
-                <set-variable name="upstreamUrl" value="https://codito-microservices-products.azurewebsites.net" />
+                <set-variable name="upstreamUrl" value="https://contoso-microservices-products.azurewebsites.net" />
             </when>
             <otherwise>
                 <return-response>
