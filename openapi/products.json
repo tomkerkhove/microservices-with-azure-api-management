@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "version": "v1",
-    "title": "Codito - Products API",
-    "description": "Products APIs of the Codito platform",
+    "title": "Contoso - Products API",
+    "description": "Products APIs of the Contoso platform",
     "contact": {
-      "name": "Codit",
+      "name": "Contoso",
       "url": "https://codit.eu"
     }
   },

@@ -37,7 +37,7 @@
             },
             "properties": {
                 "publisherEmail": "tom.kerkhove@codit.eu",
-                "publisherName": "Codito"
+                "publisherName": "Contoso"
             }
         },
         {
@@ -99,9 +99,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Orders API",
+                "displayName": "Contoso - Orders API",
                 "apiRevision": "1",
-                "description": "Orders APIs of the Codito platform",
+                "description": "Orders APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "orders",
@@ -118,9 +118,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Products API",
+                "displayName": "Contoso - Products API",
                 "apiRevision": "1",
-                "description": "Products APIs of the Codito platform",
+                "description": "Products APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "products",
@@ -137,9 +137,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipments API",
+                "displayName": "Contoso - Shipments API",
                 "apiRevision": "1",
-                "description": "Shipments APIs of the Codito platform",
+                "description": "Shipments APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments",
                 "protocols": [
@@ -155,9 +155,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipment Webhook API",
+                "displayName": "Contoso - Shipment Webhook API",
                 "apiRevision": "1",
-                "description": "Shipment Webhook APIs of the Codito platform",
+                "description": "Shipment Webhook APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments/webhooks",
                 "protocols": [
@@ -185,8 +185,8 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito Customer Platform",
-                "description": "All APIs in the Codito customer platform offering",
+                "displayName": "Contoso Customer Platform",
+                "description": "All APIs in the Contoso customer platform offering",
                 "subscriptionRequired": true,
                 "approvalRequired": false,
                 "state": "published"
@@ -200,8 +200,8 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito Integration",
-                "description": "All APIs to integrate with the Codito platform",
+                "displayName": "Contoso Integration",
+                "description": "All APIs to integrate with the Contoso platform",
                 "subscriptionRequired": true,
                 "approvalRequired": false,
                 "state": "published"
@@ -1049,9 +1049,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Orders API",
+                "displayName": "Contoso - Orders API",
                 "apiRevision": "1",
-                "description": "Orders APIs of the Codito platform",
+                "description": "Orders APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "orders",
@@ -1069,9 +1069,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Products API",
+                "displayName": "Contoso - Products API",
                 "apiRevision": "1",
-                "description": "Products APIs of the Codito platform",
+                "description": "Products APIs of the Contoso platform",
                 "subscriptionRequired": true,
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "products",
@@ -1089,9 +1089,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipments API",
+                "displayName": "Contoso - Shipments API",
                 "apiRevision": "1",
-                "description": "Shipments APIs of the Codito platform",
+                "description": "Shipments APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments",
                 "protocols": [
@@ -1108,9 +1108,9 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('ApiManagement.Name'))]"
             ],
             "properties": {
-                "displayName": "Codito - Shipment Webhook API",
+                "displayName": "Contoso - Shipment Webhook API",
                 "apiRevision": "1",
-                "description": "Shipment Webhook APIs of the Codito platform",
+                "description": "Shipment Webhook APIs of the Contoso platform",
                 "serviceUrl": "https://microservices-with-apim-monolith.azurewebsites.net",
                 "path": "shipments/webhooks",
                 "protocols": [

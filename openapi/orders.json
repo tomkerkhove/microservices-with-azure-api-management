@@ -2,10 +2,10 @@
     "swagger": "2.0",
     "info": {
         "version": "v1",
-        "title": "Codito - Orders API",
-        "description": "Orders APIs of the Codito platform",
+        "title": "Contoso - Orders API",
+        "description": "Orders APIs of the Contoso platform",
         "contact": {
-            "name": "Codit",
+            "name": "Contoso",
             "url": "https://codit.eu"
         }
     },

@@ -15,11 +15,11 @@ namespace Demo.Microservices.Products.API.Extensions
             {
                 Contact = new Contact
                 {
-                    Name = "Codit",
+                    Name = "Contoso",
                     Url = "https://codit.eu"
                 },
-                Title = $"Codito - Product API",
-                Description = $"Product APIs of the Codito platform",
+                Title = $"Contoso - Product API",
+                Description = $"Product APIs of the Contoso platform",
                 Version = "v1"
             };
 
