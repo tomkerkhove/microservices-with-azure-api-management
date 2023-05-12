@@ -7,8 +7,8 @@ env:
   AZURE_WEBAPP_NAME: contoso-monolith-api
   AZURE_WEBAPP_PACKAGE_PATH: Demo.Monolith.API\publish
   CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 7.0.x
-  WORKING_DIRECTORY: Demo.Monolith.API
+  DOTNET_CORE_VERSION: 7.x
+  WORKING_DIRECTORY: src/monolith/Demo.Monolith.API
 jobs:
   build:
     runs-on: windows-latest
