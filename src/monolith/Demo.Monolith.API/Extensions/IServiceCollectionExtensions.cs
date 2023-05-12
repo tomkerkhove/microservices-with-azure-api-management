@@ -5,6 +5,7 @@ using Demo.Monolith.API.OpenAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Demo.Monolith.API.Extensions
@@ -25,8 +26,6 @@ namespace Demo.Monolith.API.Extensions
                 swaggerGenerationOptions.SwaggerDoc(OpenApiCategories.ShipmentWebhook, CreateApiInformation("Shipment Webhook"));
                 swaggerGenerationOptions.DocInclusionPredicate(IncludeAllOperationsInMonolithApi);
 
-                swaggerGenerationOptions.DescribeAllEnumsAsStrings();
-
                 if (string.IsNullOrEmpty(xmlDocumentationPath) == false)
                 {
                     swaggerGenerationOptions.IncludeXmlComments(xmlDocumentationPath);
@@ -45,17 +44,12 @@ namespace Demo.Monolith.API.Extensions
             return apiDesc.GroupName.Equals(docName, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        private static Info CreateApiInformation(string microserviceName)
+        private static OpenApiInfo CreateApiInformation(string microserviceName)
         {
-            var openApiInformation = new Info
+            var openApiInformation = new OpenApiInfo
             {
-                Contact = new Contact
-                {
-                    Name = "Codit",
-                    Url = "https://codit.eu"
-                },
-                Title = $"Codito - {microserviceName} API",
-                Description = $"{microserviceName} APIs of the Codito platform",
+                Title = $"Contoso - {microserviceName} API",
+                Description = $"{microserviceName} APIs of the Contoso platform",
                 Version = "v1"
             };
             return openApiInformation;
