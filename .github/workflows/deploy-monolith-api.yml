@@ -14,10 +14,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
@@ -39,6 +35,10 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
