@@ -29,6 +29,11 @@ spec:
              key: AZURESTORAGE_CONNECTIONSTRING
         - name: SHIPMENTS_API_URI
           value: http://contoso-microservices-shipments-internal-service:88/api/v1/shipments
+        - name: SHIPMENTS_API_KEY
+          valueFrom:
+            secretKeyRef:
+             name: orders-secrets
+             key: SHIPMENTS_API_KEY
         livenessProbe:
             httpGet:
               path: /api/v1/health
@@ -67,3 +72,4 @@ metadata:
     microservice: orders
 data:
   AZURESTORAGE_CONNECTIONSTRING: <base64 encoded connection string>
+  SHIPMENTS_API_KEY: <APIM API key>

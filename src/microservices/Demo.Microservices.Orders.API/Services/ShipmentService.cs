@@ -23,11 +23,18 @@ namespace Demo.Microservices.Orders.API.Services
         public async Task<ShipmentInformation> CreateAsync(Address address)
         {
             var shipmentBaseUri = _configuration["SHIPMENTS_API_URI"];
-
+            var request = new HttpRequestMessage(HttpMethod.Post, shipmentBaseUri);
+            
             var rawBody = JsonConvert.SerializeObject(address);
-            var postBody = new StringContent(rawBody,Encoding.UTF8, "application/json");
+            request.Content = new StringContent(rawBody,Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(shipmentBaseUri, postBody);
+            var shipmentApiKey = _configuration["SHIPMENTS_API_KEY"];
+            if (!string.IsNullOrWhiteSpace(shipmentApiKey))
+            {
+                request.Headers.Add("API-Key", shipmentApiKey);
+            }
+
+            var response = await _httpClient.SendAsync(request);
             if (response.StatusCode != HttpStatusCode.Created)
             {
                 throw new Exception("Unable to initiate a shipment");
