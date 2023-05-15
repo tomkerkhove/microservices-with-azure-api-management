@@ -13,15 +13,15 @@ jobs:
     name: Push Monolith to GHCR
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-monolith
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-monolith
     steps:
     - uses: actions/checkout@v2
     - name: Docker Login
       uses: docker/login-action@v1.8.0
       with:
         registry: ghcr.io
-        username: coditeu
-        password: ${{ secrets.CONTAINER_REGISTRY_KEY }}
+        username: tomkerkhove
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: docker build ./src/monolith/ --file ./src/monolith/Demo.Monolith.API/Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
     - name: Push the Docker image
@@ -30,15 +30,15 @@ jobs:
     name: Push Order Microservice to GHCR
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-order
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-order
     steps:
     - uses: actions/checkout@v2
     - name: Docker Login
       uses: docker/login-action@v1.8.0
       with:
         registry: ghcr.io
-        username: coditeu
-        password: ${{ secrets.CONTAINER_REGISTRY_KEY }}
+        username: tomkerkhove
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: docker build ./src/microservices --file ./src/microservices/Demo.Microservices.Orders.API/Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
     - name: Push the Docker image
@@ -47,15 +47,15 @@ jobs:
     name: Push Shipments Microservice to GHCR
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-shipment
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-shipment
     steps:
     - uses: actions/checkout@v2
     - name: Docker Login
       uses: docker/login-action@v1.8.0
       with:
         registry: ghcr.io
-        username: coditeu
-        password: ${{ secrets.CONTAINER_REGISTRY_KEY }}
+        username: tomkerkhove
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: docker build ./src/microservices --file ./src/microservices/Demo.Microservices.Shipments.API/Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
     - name: Push the Docker image
@@ -64,15 +64,15 @@ jobs:
     name: Push Products Microservice to GHCR
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-product
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-product
     steps:
     - uses: actions/checkout@v2
     - name: Docker Login
       uses: docker/login-action@v1.8.0
       with:
         registry: ghcr.io
-        username: coditeu
-        password: ${{ secrets.CONTAINER_REGISTRY_KEY }}
+        username: tomkerkhove
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: docker build ./src/microservices --file ./src/microservices/Demo.Microservices.Products.API/Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
     - name: Push the Docker image
