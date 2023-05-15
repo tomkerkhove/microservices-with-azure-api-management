@@ -1,6 +1,17 @@
 name: Push Docker Images to GitHub Container Registry
 on:
   workflow_dispatch:
+    inputs:
+      imageTag:
+        description: 'Tag to push images with'
+        required: true
+        type: string
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+  release:
+    types: [published]
   push:
     paths:
     - '.github/workflows/ci-images.yml'
@@ -17,6 +28,12 @@ jobs:
       IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-monolith
     steps:
     - uses: actions/checkout@v2
+    - name: Determine image tag from Release (${GITHUB_REF#refs/*/})
+      if: ${{ github.event_name == 'release' }}
+      run: echo "IMAGE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV"
+    - name: Determine image tag from manual trigger (${{ inputs.imageTag }})
+      if: ${{ github.event_name == 'release' }}
+      run: echo "IMAGE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV"
     - name: Docker Login
       uses: docker/login-action@v1.8.0
       with:
