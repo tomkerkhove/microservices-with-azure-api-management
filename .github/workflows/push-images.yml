@@ -1,5 +1,6 @@
 name: Push Docker Images to GitHub Container Registry
 on:
+  workflow_dispatch:
   push:
     paths:
     - '.github/workflows/ci-images.yml'
