@@ -24,9 +24,9 @@ jobs:
       IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-monolith
     steps:
     - uses: actions/checkout@v2
-    - name: Determine image tag from Release (${{ github.ref }})
+    - name: Determine image tag from Release (${{ github.ref_name }})
       if: ${{ github.event_name == 'release' }}
-      run: echo "IMAGE_TAG=${{ github.ref }}" >> $GITHUB_ENV
+      run: echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
     - name: Determine image tag from manual trigger (${{ inputs.imageTag }})
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: echo "IMAGE_TAG=${{ inputs.imageTag }}" >> $GITHUB_ENV
@@ -47,9 +47,9 @@ jobs:
       IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-order
     steps:
     - uses: actions/checkout@v2
-    - name: Determine image tag from Release (${{ github.ref }})
+    - name: Determine image tag from Release (${{ github.ref_name }})
       if: ${{ github.event_name == 'release' }}
-      run: echo "IMAGE_TAG=${{ github.ref }}" >> $GITHUB_ENV
+      run: echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
     - name: Determine image tag from manual trigger (${{ inputs.imageTag }})
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: echo "IMAGE_TAG=${{ inputs.imageTag }}" >> $GITHUB_ENV
@@ -70,9 +70,9 @@ jobs:
       IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-shipment
     steps:
     - uses: actions/checkout@v2
-    - name: Determine image tag from Release (${{ github.ref }})
+    - name: Determine image tag from Release (${{ github.ref_name }})
       if: ${{ github.event_name == 'release' }}
-      run: echo "IMAGE_TAG=${{ github.ref }}" >> $GITHUB_ENV
+      run: echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
     - name: Determine image tag from manual trigger (${{ inputs.imageTag }})
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: echo "IMAGE_TAG=${{ inputs.imageTag }}" >> $GITHUB_ENV
@@ -93,9 +93,9 @@ jobs:
       IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-product
     steps:
     - uses: actions/checkout@v2
-    - name: Determine image tag from Release (${{ github.ref }})
+    - name: Determine image tag from Release (${{ github.ref_name }})
       if: ${{ github.event_name == 'release' }}
-      run: echo "IMAGE_TAG=${{ github.ref }}" >> $GITHUB_ENV
+      run: echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
     - name: Determine image tag from manual trigger (${{ inputs.imageTag }})
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: echo "IMAGE_TAG=${{ inputs.imageTag }}" >> $GITHUB_ENV
