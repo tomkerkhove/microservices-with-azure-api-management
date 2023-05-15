@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: shipments-api
-        image: ghcr.io/tomkerkhove/microservices-with-api-management-services-shipment:latest
+        image: ghcr.io/tomkerkhove/microservices-with-api-management-services-shipment:0.2.0
         ports:
         - containerPort: 80
         env:
@@ -27,14 +27,6 @@ spec:
             secretKeyRef:
              name: shipments-secrets
              key: AZURESTORAGE_CONNECTIONSTRING
-        livenessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 80
-        readinessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 80
 ---
 apiVersion: v1
 kind: Service

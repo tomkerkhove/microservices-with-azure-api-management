@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: products-api
-        image: ghcr.io/tomkerkhove/microservices-with-api-management-services-product:latest
+        image: ghcr.io/tomkerkhove/microservices-with-api-management-services-product:0.2.0
         ports:
         - containerPort: 80
         env:
@@ -27,14 +27,6 @@ spec:
             secretKeyRef:
              name: products-secrets
              key: AZURESTORAGE_CONNECTIONSTRING
-        livenessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 80
-        readinessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 80
 ---
 apiVersion: v1
 kind: Service
