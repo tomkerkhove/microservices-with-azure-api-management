@@ -25,7 +25,7 @@ namespace Demo.Microservices.Orders.API.Services
             var shipmentBaseUri = _configuration["SHIPMENTS_API_URI"];
 
             var rawBody = JsonConvert.SerializeObject(address);
-            var postBody = new StringContent(rawBody,Encoding.UTF8,"application/json");
+            var postBody = new StringContent(rawBody,Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(shipmentBaseUri, postBody);
             if (response.StatusCode != HttpStatusCode.Created)

@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: orders-api
-        image: ghcr.io/coditeu/microservices-with-api-management-services-order:latest
+        image: ghcr.io/tomkerkhove/microservices-with-api-management-services-order:latest
         ports:
         - containerPort: 80
         env:
@@ -28,7 +28,7 @@ spec:
              name: orders-secrets
              key: AZURESTORAGE_CONNECTIONSTRING
         - name: SHIPMENTS_API_URI
-          value: http://contoso-microservices-shipments-loadbalancer-service:88/api/v1/shipments
+          value: http://contoso-microservices-shipments-internal-service:88/api/v1/shipments
         livenessProbe:
             httpGet:
               path: /api/v1/health
@@ -46,7 +46,7 @@ metadata:
     app: contoso
     microservice: orders
   annotations:
-    service.beta.kubernetes.io/azure-dns-label-name: contoso-kubernetes-orders
+    service.beta.kubernetes.io/azure-dns-label-name: contoso-orders-api
 spec:
   type: LoadBalancer
   ports:

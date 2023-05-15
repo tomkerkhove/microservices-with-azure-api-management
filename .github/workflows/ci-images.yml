@@ -28,7 +28,7 @@ jobs:
     name: Build Monolith (Docker)
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-monolith
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-monolith
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -37,7 +37,7 @@ jobs:
     name: Build Order Microservice (Docker)
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-order
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-order
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -46,7 +46,7 @@ jobs:
     name: Build Shipments Microservice (Docker)
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-shipment
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-shipment
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -55,7 +55,7 @@ jobs:
     name: Build Products Microservice (Docker)
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/coditeu/microservices-with-api-management-services-product
+      IMAGE_NAME: ghcr.io/tomkerkhove/microservices-with-api-management-services-product
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
