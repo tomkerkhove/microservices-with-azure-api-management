@@ -22,7 +22,8 @@
                                 "interval": "PT1M",
                                 "statusCodeRanges": [
                                     {
-                                        "min": "500"
+                                        "min": "500",
+                                        "max": "599"
                                     }
                                 ]
                             },
