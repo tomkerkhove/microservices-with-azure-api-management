@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimServiceName": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/backends",
+            "apiVersion": "2023-05-01-preview",
+            "name": "[concat(parameters('apimServiceName'), '/bacon-api-with-circuit-breaker')]",
+            "properties": {
+                "protocol": "http",
+                "url": "https://bacon-api.wonderfulbeach-99861d1c.westeurope.azurecontainerapps.io",
+                "circuitBreaker": {
+                    "rules": [
+                        {
+                            "failureCondition": {
+                                "count": "5",
+                                "interval": "PT1M",
+                                "statusCodeRanges": [
+                                    {
+                                        "min": "500"
+                                    }
+                                ]
+                            },
+                            "name": "failed-requests",
+                            "tripDuration": "PT1M"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
